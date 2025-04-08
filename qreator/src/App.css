@@ -1,0 +1,43 @@
+#root {
+  margin: 0;
+  padding: 0;
+  
+ min-height: 100%;
+ box-sizing: border-box;
+
+}
+
+.nav{
+  margin: 0;
+  padding: 0;
+position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+}
+
+.Recents {
+  position: absolute; /* Keep it positioned relative to the viewport */
+  top: 0;
+  border-radius: 50px 0 0 0 ;
+  left: 8%; /* Push it to the right of the Navbar */
+  width: 100%; /* Fill the remaining 80% of the screen */
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px; /* Add some padding for spacing */
+  background-color: rgb(66, 61, 61); /* Match the Recents background color */
+  overflow: hidden; /* Allow scrolling if content overflows */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+.genqr {
+  position: absolute; /* Keep it positioned relative to the viewport */
+  top: 0;
+  right: 0;
+  border-radius: 50px 0 0 0 ;
+  z-index: 1;
+  width: 55%; /* Fill the remaining 50% of the screen */
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px; /* Add some padding for spacing */
+  background-color: rgb(0, 0, 0); /* Match the Genqr background color */
+  overflow: hidden; /* Allow scrolling if content overflows */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
