@@ -2,10 +2,10 @@ import './App.css';
 import Navbar from './navbar.jsx';
 import Recents from './recents.jsx';
 import Genqr from './genqr.jsx';
-import Cursor from './cursor.jsx';
+
 
 function App() {
-  const cursor = document.querySelector('.cursor');
+  let cursor = document.querySelector('.cursor');
   window.addEventListener("mousemove", (e) => {
     let cursor = document.getElementById("cursor");
     setTimeout(() => {
