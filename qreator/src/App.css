@@ -41,3 +41,22 @@ position: absolute;
   overflow: hidden; /* Allow scrolling if content overflows */
   box-sizing: border-box; /* Include padding in width/height calculations */
 }
+
+.cursor {
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  background-color: #fff;
+  border-radius: 100%;
+  margin-left: -22px;
+  margin-top: -22px;
+  z-index: 1000;
+  backdrop-filter: grayscale(1);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cursor.active {
+  transform: scale(1.5);
+}

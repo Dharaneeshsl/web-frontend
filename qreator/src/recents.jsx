@@ -47,7 +47,7 @@ function Recents(){
 
        
         <div className="card ctr-card">
-           <p className="card-label">CTR</p>
+           <p className="card-label ctr">CTR</p>
            <p className="card-value rotated-value">5.32%</p>
         </div>
         <div className="emp2"></div>
