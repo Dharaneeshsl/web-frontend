@@ -14,9 +14,9 @@ function App() {
     }, 50);
   });
 
-  document.querySelectorAll('h1, p').forEach(el => {
+  document.querySelectorAll('h1, p,a,button').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      if (el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'A') {
+      if (el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'A' || el.tagName === 'BUTTON') {
         cursor.classList.add('active');
       }
     });
