@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "vite-plugin-svgr": "^4.3.0"
-  },
-  "devDependencies": {
-    "@svgr/webpack": "^8.1.0"
-  }
-}
