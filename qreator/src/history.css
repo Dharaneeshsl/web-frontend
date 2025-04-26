@@ -1,27 +1,47 @@
+.curve {
+  height: 100px;
+  width: 100px;
+  background-color: rgba(0, 0, 0, 0);
+  position: fixed;
+  top: 0;
+  left: 120px;
+  z-index: 5;
+  overflow: hidden; /* Ensure the pseudo-element stays within the parent */
+}
+
+.curve::before {
+  content: "";
+  position: fixed;
+  
+  background-color: #0074d900;
+  top:0;
+  left: 123px;
+  height: 100px;
+  width: 100px;
+  
+  border-top-left-radius: 50px;
+  box-shadow: 0 -50px 0 0 #000000;}
+
 .history-container {
+  width: 92%;
+  height: 100%;
+  margin: 0 auto;
+  color: #e0e0e0;
+  background-color: rgba(24, 24, 24, 0.01);
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+}
 
-    width: 92%;
-    height: 100%;
-    margin: 0 auto;
-    color: #e0e0e0;
-    background-color: rgba(24, 24, 24, 0.01);
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: flex;
-    
-    
-  }
-
-  .logo>h1{
-    padding-left: 120px;
-    z-index: 200;
-    position: fixed;
-    left: 0;
-    top: 55%;
-    margin: 0;
-    display: flex;
-    font-weight: 400;
-    font-size: 16rem;
-  }
-
+.logo > h1 {
+  padding-left: 120px;
+  z-index: 200;
+  position: fixed;
+  left: 0;
+  top: 55%;
+  margin: 0;
+  display: flex;
+  font-weight: 400;
+  font-size: 16rem;
+}

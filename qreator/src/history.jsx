@@ -18,7 +18,9 @@ function History() {
     return (
        <> 
        <Navbar></Navbar>
+       
        <div className="history-container">
+       <div className="curve"></div>
        <div className="logo"><h1>History</h1></div>
         <ScrollCards/>
                 
