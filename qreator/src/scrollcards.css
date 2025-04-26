@@ -1,11 +1,12 @@
 
   .history-content {
+
     width: 100%;
     min-height: 100vh;
     height: auto;
     overflow-y: auto;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    background-color: rgba(24, 24, 24);
     overflow: auto;
   }
   
@@ -22,6 +23,8 @@
   
   
   .hiscards {
+    background-color: transparent;
+    border-radius: 50px;
     position: absolute;
     top: 25%;
     left: 50%;
@@ -32,9 +35,12 @@
   }
   
   .hiscard {
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    width: 500px;
-    height: 550px;
+    padding-top: 9px;
+    width: 250px;
+    height: 300px;
     top: 50%;
     left: 50%;
     transform-origin: center center;
@@ -43,6 +49,8 @@
     flex-direction: column;
     gap: 1em ;
     will-change: transform; 
+    background-color: rgb(30, 29, 29);
+    border-radius: 30px;
   
   }
   
@@ -85,8 +93,12 @@
   }
   
   .steps {
+    border-radius: 20px;
+    background-color: transparent;
+
     position: relative;
     height: 100vh;
-    overflow: visible;
+    overflow: hidden;
     background: rgba(0, 0, 0, 0);
   }
+  

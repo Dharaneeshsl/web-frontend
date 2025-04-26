@@ -18,12 +18,12 @@ function History() {
     return (
        <> 
        <Navbar></Navbar>
-         <div className="history-container">
-            <div className="logo"><h1>History</h1></div>
+       <div className="history-container">
+       <div className="logo"><h1>History</h1></div>
         <ScrollCards/>
                 
                 
-          </div>
+         </div>
        </>
     );
 }
