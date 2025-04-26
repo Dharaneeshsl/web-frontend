@@ -110,6 +110,7 @@ function ScrollCards() {
             <div className="hiscard empty"> </div>
             <div className="hiscard empty"></div>
           </div>
+
         </section>
       </div>
     </>
