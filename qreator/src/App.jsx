@@ -1,44 +1,20 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
-import Navbar from './navbar.jsx';
-import Recents from './recents.jsx';
-import Genqr from './genqr.jsx';
-
+import Home from './Home.jsx';
+import History from './history.jsx';
 
 function App() {
-  let cursor = document.querySelector('.cursor');
-  window.addEventListener("mousemove", (e) => {
-    let cursor = document.getElementById("cursor");
-    setTimeout(() => {
-      cursor.style.top = `${e.clientY}px`;
-      cursor.style.left = `${e.clientX}px`;
-    }, 50);
-  });
-
-  document.querySelectorAll('h1, p,a,button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if (el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'A' || el.tagName === 'BUTTON') {
-        cursor.classList.add('active');
-      }
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('active');
-    });
-  });
-
-  return (
-    <div id="root">
-      <div className='cursor' id='cursor'> </div>
-      <div className="nav" id='nav'>
-        <Navbar />
+  
+  return( 
+    <Router>
+      <div id="root">
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/history" element={<History />} />
+        </Routes>
       </div>
-      <div className="Recents" id='Recents'>
-        <Recents />
-      </div>
-      <div className="genqr" id='genqr'>
-        <Genqr />
-      </div>
-    </div>
-  );
+    </Router>);
 }
 
 export default App;

@@ -1,0 +1,92 @@
+
+  .history-content {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    overflow: auto;
+  }
+  
+  section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  
+   
+  }
+.intro{
+  height: 10px;
+}
+  
+  
+  .hiscards {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150vw;
+    height: 600px;
+    will-change: transform;
+  }
+  
+  .hiscard {
+    position: absolute;
+    width: 500px;
+    height: 550px;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    margin-left: -250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em ;
+    will-change: transform; 
+  
+  }
+  
+  .step-counter{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+  margin: 2em;
+  
+  }
+  
+  .counter-title, .count{
+    position: relative;
+    width: 1200px;
+  }
+  
+  .count{
+    top: -10px;
+  }
+  
+  .count-container{
+    position: relative;
+    transform: translateY(150px);
+    will-change: transform;
+  }
+  
+  .step-counter h1{
+    width: 100%;
+    position: relative;
+    color: white;
+    text-transform: uppercase;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  will-change: transform;
+  }
+  
+  .empty{
+    opacity: 0;
+  }
+  
+  .steps {
+    position: relative;
+    height: 100vh;
+    overflow: visible;
+    background: rgba(0, 0, 0, 0);
+  }
