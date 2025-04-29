@@ -109,3 +109,10 @@ justify-content: center;
   width: 150px;
   height: 150px;
 }
+
+.qr-output{
+    position: absolute;
+    top: 5%;
+    left: 30%;
+   
+}
