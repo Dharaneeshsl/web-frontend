@@ -1,58 +1,56 @@
 from flask import Flask, request, jsonify, send_file
-from io import BytesIO
-from PIL import Image, ImageDraw
-import qrcode
 from flask_cors import CORS
-
+from io import BytesIO
+import requests as req
 
 app = Flask(__name__)
 CORS(app)
 
-def generate_qr_with_shape(data, shape='square'):
-    qr = qrcode.QRCode(border=1)
-    qr.add_data(data)
-    qr.make(fit=True)
-    matrix = qr.get_matrix()
-
-    size = 10
-    img_size = len(matrix) * size
-    img = Image.new('RGBA', (img_size, img_size), (255, 255, 255, 0))
-    draw = ImageDraw.Draw(img)
-
-    for y, row in enumerate(matrix):
-        for x, module in enumerate(row):
-            if module:
-                x_pos = x * size
-                y_pos = y * size
-                if shape == 'model1':
-                    draw.ellipse((x_pos, y_pos, x_pos + size, y_pos + size), fill='white')
-                elif shape == 'model2':
-                    points = [
-                        (x_pos + size // 2, y_pos),
-                        (x_pos, y_pos + size),
-                        (x_pos + size, y_pos + size)
-                    ]
-                    draw.polygon(points, fill='white')
-                else:
-                    draw.rectangle((x_pos, y_pos, x_pos + size, y_pos + size), fill='white')
-
-    return img
-
 @app.route('/generate_qr', methods=['POST'])
 def generate_qr():
-    data = request.json.get('url')
-    shape = request.json.get('shape', 'square')
+    # Get data from the request
+    data = request.json.get('data')
+    design_type = request.json.get('shape', 1)  # Default to 1 if not provided
 
-    if not data:
-        return jsonify({'error': 'URL is required'}), 400
+    # Define the payloads for different designs
+    payload1 = {"data": data, "config": {"body": "circle", "eye": "frame0", "eyeBall": "ball0", "bodyColor": "#FFFFFF", "bgColor": "#00000000", "eye1Color": "#FFFFFF", "eye2Color": "#FFFFFF", "eye3Color": "#FFFFFF", "eyeBall1Color": "#FFFFFF", "eyeBall2Color": "#FFFFFF", "eyeBall3Color": "#FFFFFF"}, "size": 1000, "download": "imageUrl", "file": "png"}
+    payload2 = {"data": data, "config": {"body": "square", "eye": "frame0", "eyeBall": "ball0", "bodyColor": "#FFFFFF", "bgColor": "#00000000", "eye1Color": "#FFFFFF", "eye2Color": "#FFFFFF", "eye3Color": "#FFFFFF", "eyeBall1Color": "#FFFFFF", "eyeBall2Color": "#FFFFFF", "eyeBall3Color": "#FFFFFF"}, "size": 1000, "download": "imageUrl", "file": "png"}
+    payload3 = {"data": data, "config": {"body": "circle-zebra-vertical", "eye": "frame0", "eyeBall": "ball0", "bodyColor": "#FFFFFF", "bgColor": "#00000000", "eye1Color": "#FFFFFF", "eye2Color": "#FFFFFF", "eye3Color": "#FFFFFF", "eyeBall1Color": "#FFFFFF", "eyeBall2Color": "#FFFFFF", "eyeBall3Color": "#FFFFFF"}, "size": 1000, "download": "imageUrl", "file": "png"}
 
-    qr_img = generate_qr_with_shape(data, shape)
+    # Select the payload based on the design type
+    if design_type == 1:
+        payload = payload1
+    elif design_type == 2:
+        payload = payload2
+    elif design_type == 3:
+        payload = payload3
+    else:
+        return jsonify({"error": "Invalid design type"}), 400
 
-    img_io = BytesIO()
-    qr_img.save(img_io, 'PNG')
-    img_io.seek(0)
+    # Send the request to the QR code API
+    url = "https://api.qrcode-monkey.com/qr/custom"
+    resp = req.post(url, json=payload)
 
-    return send_file(img_io, mimetype='image/png')
+    if resp.status_code == 200:
+        # Get the image URL from the response
+        output = resp.json()
+        image_url = output.get('imageUrl')
+        if not image_url:
+            return jsonify({"error": "Failed to retrieve image URL"}), 500
+
+        # Download the image
+        image_resp = req.get(f"http:{image_url}")
+        if image_resp.status_code == 200:
+            # Return the image as a response
+            img_io = BytesIO()
+            img_io.write(image_resp.content)
+            img_io.seek(0)
+            return send_file(img_io, mimetype='image/png')
+        else:
+            return jsonify({"error": "Failed to download image"}), 500
+    else:
+        return jsonify({"error": "Failed to generate QR code"}), resp.status_code
+
 
 if __name__ == '__main__':
     app.run(debug=True)

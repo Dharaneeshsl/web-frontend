@@ -114,5 +114,15 @@ justify-content: center;
     position: absolute;
     top: 5%;
     left: 30%;
+  height: 250px;
+    width:   250px;
+   
+}
+
+.qrimg{
+  height: 250px;
+  width:   250px;
+ 
+  object-fit: cover;
    
 }

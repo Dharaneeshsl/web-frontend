@@ -4,6 +4,7 @@ import "./generate.css";
 import model1 from "./assets/model1.png";
 import model2 from "./assets/model2.png";
 import model3 from "./assets/model3.png";
+import { data } from "react-router-dom";
 
 function Generate() {
   const [selectedModel, setSelectedModel] = useState(null); // State to store the selected model
@@ -44,7 +45,7 @@ function Generate() {
       const response = await axios.post(
         "http://127.0.0.1:5000/generate_qr", // Replace with your backend API URL
         {
-          url: url,
+          data: url,
           shape: selectedModel, // Send the selected model as the shape
         },
         { responseType: "blob" } // Expecting an image blob as the response
@@ -66,7 +67,7 @@ function Generate() {
         <h1>Generate</h1>
         <div className="flexbox">
           <div className="qr-output">
-            {qrCode && <img src={qrCode} alt="Generated QR Code" />}
+            {qrCode && <img className="qrimg" src={qrCode} alt="Generated QR Code" />}
           </div>
           <div className="url_input">
             <input
@@ -94,20 +95,20 @@ function Generate() {
           </div>
           <div className="qrmodels">
             <div
-              className={`model ${selectedModel === "model1" ? "active" : ""}`}
-              onClick={() => handleModelClick("model1")}
+              className={`model ${selectedModel === 1 ? "active" : ""}`}
+              onClick={() => handleModelClick(1)}
             >
               <img src={model1} alt="Model 1" />
             </div>
             <div
-              className={`model ${selectedModel === "model2" ? "active" : ""}`}
-              onClick={() => handleModelClick("model2")}
+              className={`model ${selectedModel === 2 ? "active" : ""}`}
+              onClick={() => handleModelClick(2)}
             >
               <img src={model2} alt="Model 2" />
             </div>
             <div
-              className={`model ${selectedModel === "model3" ? "active" : ""}`}
-              onClick={() => handleModelClick("model3")}
+              className={`model ${selectedModel === 3 ? "active" : ""}`}
+              onClick={() => handleModelClick(3)}
             >
               <img src={model3} alt="Model 3" />
             </div>
