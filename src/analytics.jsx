@@ -9,7 +9,7 @@ import {
   ReferenceDot
 } from 'recharts';
 
-
+import QRCODE from "./assets/asset-analytics.png"
 import './analytics.css';
 
 
@@ -118,7 +118,23 @@ function Analytics() {
            <div className="short-url-section">
              <span className="short-url-text">{shortUrl}</span>
              <div className="short-url-icons">
-                
+             <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="11" fill="#cccccc"/>
+
+  <rect x="5" y="5" width="8" height="8"
+        fill="none"
+        stroke="#333333"
+        stroke-width="2"
+        stroke-linejoin="round"
+        stroke-linecap="round" />
+
+  <rect x="8" y="8" width="8" height="8"
+        fill="#cccccc"
+        stroke="#333333"
+        stroke-width="2"
+        stroke-linejoin="round"
+        stroke-linecap="round" />
+</svg>
              </div>
            </div>
         </div>
