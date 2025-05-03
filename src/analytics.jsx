@@ -8,10 +8,10 @@ import {
   ResponsiveContainer,
   ReferenceDot
 } from 'recharts';
-import QRCode from 'qrcode.react';
-import { FiCopy, FiShare2 } from 'react-icons/fi';
 
-import './Dashboard.css'; // Make sure this path matches your CSS file name
+
+
+import './analytics.css';
 
 const mainChartData = [
   { name: 'JAN', uv: 400 },
@@ -51,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-function Dashboard() { // Rename this function if your file is called Analytics.jsx
+function Analytics() { // Rename this function if your file is called Analytics.jsx
   const longUrl = "https://helloworld.com";
   const shortUrl = "short/kdkf1";
 
@@ -177,4 +177,4 @@ function Dashboard() { // Rename this function if your file is called Analytics.
   );
 }
 
-export default Dashboard; // Rename this if your file is called Analytics.jsx
+export default Analytics; // Rename this if your file is called Analytics.jsx
