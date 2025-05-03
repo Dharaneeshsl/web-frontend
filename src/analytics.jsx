@@ -10,8 +10,8 @@ import {
 } from 'recharts';
 
 
-
 import './analytics.css';
+
 
 const mainChartData = [
   { name: 'JAN', uv: 400 },
@@ -51,9 +51,9 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-function Analytics() { // Rename this function if your file is called Analytics.jsx
+function Analytics() { 
   const longUrl = "https://helloworld.com";
-  const shortUrl = "short/kdkf1";
+  const shortUrl = "https://sh.rt/xyz";
 
   const highlightedPoint = mainChartData.find(p => p.uv === 870);
 
@@ -109,14 +109,7 @@ function Analytics() { // Rename this function if your file is called Analytics.
 
       <div className="grid-item item-qrcode">
         <div className="qr-code-container">
-          <QRCode
-            value={longUrl}
-            size={128}
-            bgColor="#ffffff"
-            fgColor="#000000"
-            level="Q"
-            renderAs="svg"
-          />
+         
         </div>
         <div className="qr-details">
            <span><span className="label">Created dt:</span> <span className="value">12 Feb</span></span>
@@ -125,8 +118,7 @@ function Analytics() { // Rename this function if your file is called Analytics.
            <div className="short-url-section">
              <span className="short-url-text">{shortUrl}</span>
              <div className="short-url-icons">
-                <FiCopy size={18} onClick={() => navigator.clipboard.writeText(shortUrl)} title="Copy Short URL" />
-                <FiShare2 size={18} title="Share Options"/>
+                
              </div>
            </div>
         </div>
@@ -177,4 +169,4 @@ function Analytics() { // Rename this function if your file is called Analytics.
   );
 }
 
-export default Analytics; // Rename this if your file is called Analytics.jsx
+export default Analytics;
