@@ -1,0 +1,168 @@
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .grid-item {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .item-statistics { grid-column: 1 / 2; grid-row: 1 / 2; }
+  .item-qrcode { grid-column: 2 / 4; grid-row: 1 / 2; }
+  .item-ctr { grid-column: 1 / 2; grid-row: 2 / 3; }
+  .item-region { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .item-device { grid-column: 3 / 4; grid-row: 2 / 3; }
+  
+  
+  .widget-title {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .large-value {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+  
+  .percentage-change {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+  
+  .positive-change {
+    color: #33cc99;
+  }
+  
+  .negative-change {
+    color: #ff6666;
+  }
+  
+  .chart-container {
+    width: 100%;
+    height: 100px;
+    margin-top: auto;
+  }
+  
+  .main-chart-container {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+  }
+  
+  .item-statistics .large-value {
+    font-size: 2.5rem;
+  }
+  .item-statistics .widget-title {
+    margin-bottom: 0;
+  }
+  .item-statistics .subtitle {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  
+  
+  .item-qrcode {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 25px;
+  }
+  
+  .qr-code-container {
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    display: inline-block;
+    line-height: 0;
+  }
+  
+  .qr-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #bbb;
+    flex-grow: 1;
+  }
+  
+  .qr-details span {
+    display: block;
+  }
+  
+  .qr-details .label {
+    color: #888;
+    margin-right: 5px;
+  }
+  .qr-details .value {
+    color: #e0e0e0;
+  }
+  
+  
+  .short-url-section {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2a2a2a;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  
+  .short-url-text {
+    color: #ccc;
+    font-family: monospace;
+  }
+  
+  .short-url-icons {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .short-url-icons svg {
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .short-url-icons svg:hover {
+    color: #fff;
+  }
+  
+  .item-ctr .large-value,
+  .item-region .large-value,
+  .item-device .large-value {
+    font-size: 1.8rem;
+  }
+  
+  .recharts-tooltip-wrapper {
+      outline: none;
+  }
+  .recharts-default-tooltip {
+    background-color: rgba(50, 50, 50, 0.85) !important;
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 0.85rem;
+  }
