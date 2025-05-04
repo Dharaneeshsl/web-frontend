@@ -18,7 +18,7 @@ function Navbar() {
 <path d="M18.6667 14.6667C18.0941 13.9012 17.3635 13.2678 16.5246 12.8094C15.6857 12.3511 14.758 12.0785 13.8045 12.0102C12.851 11.9419 11.8939 12.0795 10.9982 12.4136C10.1025 12.7477 9.2892 13.2706 8.61336 13.9467L4.61336 17.9467C3.39897 19.204 2.72701 20.888 2.7422 22.636C2.75738 24.384 3.45851 26.0561 4.69457 27.2921C5.93062 28.5282 7.6027 29.2293 9.35068 29.2445C11.0987 29.2597 12.7827 28.5877 14.04 27.3733L16.32 25.0933" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg></a>
 </div>
-      <div id="bar"><a href="/analytics"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <div id="bar"><a href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
         <path d="M16 26.6667V13.3333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M24 26.6667V5.33334" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M8 26.6667V21.3333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
