@@ -1,4 +1,5 @@
 import React from 'react';
+import './analytics.css';
 import {
   LineChart,
   Line,
@@ -9,6 +10,7 @@ import {
   ReferenceDot
 } from 'recharts';
 
+<<<<<<< HEAD
 import QRCODE from "./assets/asset-analytics.png"
 import './analytics.css';
 
@@ -52,6 +54,46 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function Analytics() { 
+=======
+function Analytics() {
+  const mainChartData = [
+    { name: 'JAN', uv: 400 },
+    { name: 'FEB', uv: 870 },
+    { name: 'MAR', uv: 600 },
+    { name: 'APR', uv: 780 },
+    { name: 'MAY', uv: 590 },
+    { name: 'JUN', uv: 450 },
+  ];
+  
+  const ctrChartData = [
+    { name: 'A', pv: 24 }, { name: 'B', pv: 13 }, { name: 'C', pv: 98 },
+    { name: 'D', pv: 39 }, { name: 'E', pv: 48 }, { name: 'F', pv: 38 },
+    { name: 'G', pv: 43 },
+  ];
+  
+  const regionChartData = [
+      { name: 'A', pv: 10 }, { name: 'B', pv: 30 }, { name: 'C', pv: 20 },
+      { name: 'D', pv: 50 }, { name: 'E', pv: 40 }, { name: 'F', pv: 70 },
+      { name: 'G', pv: 60 },
+  ];
+  
+  const deviceChartData = [
+      { name: 'A', pv: 5 }, { name: 'B', pv: 15 }, { name: 'C', pv: 8 },
+      { name: 'D', pv: 25 }, { name: 'E', pv: 18 }, { name: 'F', pv: 30 },
+      { name: 'G', pv: 22 },
+  ];
+  
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="recharts-default-tooltip">
+          <p className="recharts-tooltip-label">{`${label} : ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+    return null;
+  }; // Rename this function if your file is called Analytics.jsx
+>>>>>>> 9bda773afbe10e65e765dc1e36d5a7a0b9e231ea
   const longUrl = "https://helloworld.com";
   const shortUrl = "https://sh.rt/xyz";
 
@@ -109,7 +151,11 @@ function Analytics() {
 
       <div className="grid-item item-qrcode">
         <div className="qr-code-container">
+<<<<<<< HEAD
          
+=======
+       
+>>>>>>> 9bda773afbe10e65e765dc1e36d5a7a0b9e231ea
         </div>
         <div className="qr-details">
            <span><span className="label">Created dt:</span> <span className="value">12 Feb</span></span>
@@ -118,6 +164,7 @@ function Analytics() {
            <div className="short-url-section">
              <span className="short-url-text">{shortUrl}</span>
              <div className="short-url-icons">
+<<<<<<< HEAD
              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <circle cx="12" cy="12" r="11" fill="#cccccc"/>
 
@@ -135,6 +182,9 @@ function Analytics() {
         stroke-linejoin="round"
         stroke-linecap="round" />
 </svg>
+=======
+               
+>>>>>>> 9bda773afbe10e65e765dc1e36d5a7a0b9e231ea
              </div>
            </div>
         </div>
