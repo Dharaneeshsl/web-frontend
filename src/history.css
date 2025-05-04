@@ -2,9 +2,9 @@
   height: 100px;
   width: 100px;
   background-color: rgba(0, 0, 0, 0);
-  position: fixed;
-  top: 0;
-  left: 120px;
+  position: absolute;
+  top: 10px;
+  left: 0;
   z-index: 5;
   overflow: hidden; /* Ensure the pseudo-element stays within the parent */
 }
@@ -12,10 +12,12 @@
 .curve::before {
   content: "";
   position: fixed;
+  height: 100px;
+  width: 100px;
+  top:0;
   
   background-color: #0074d900;
-  top:0;
-  left: 123px;
+  
   height: 100px;
   width: 100px;
   

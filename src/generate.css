@@ -3,7 +3,7 @@
   background-color: black;
   height: 100%;
   width: 100%;
-  border-radius: 50px 0 0 50px;
+  border-radius: 50px 0 0 0;
 }
 
 .url_input {
@@ -83,7 +83,8 @@ justify-content: center;
    border-radius: 20px;
     height: 250px;
     width: 200px;
-    background-color: #2a2a2a;
+    background: #424242;
+    background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
     border: 2px solid transparent;
     transition: transform 0.2s ease,border 0.2s ease;
 }

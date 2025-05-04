@@ -6,7 +6,8 @@
     height: auto;
     overflow-y: auto;
     position: absolute;
-    background-color: rgba(24, 24, 24);
+    background: #424242;
+  background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
     overflow: auto;
   }
   

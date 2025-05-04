@@ -5,7 +5,8 @@
   height: 90%;
   margin: 0 auto;
   color: #e0e0e0;
-  background-color: rgb(24, 24, 24);
+  background: #424242;
+  background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
   border-radius: 50px 0 0 0;
   position: relative;
   left: 0;
@@ -23,10 +24,10 @@
   height: 300px;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.059),
-    rgba(255, 255, 255, 0) 70%
+    rgba(255, 255, 255, 0.05) 0%,
+    rgb(0, 0, 0,0) 70%
   );
-  backdrop-filter: blur(100px);
+  backdrop-filter: blur(1px);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -64,7 +65,8 @@
 }
 
 .card {
-  background-color: #000000;
+  background: #424242;
+  background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
   border-radius: 25px;
   padding: 20px;
   display: flex;
@@ -154,8 +156,8 @@ a {
   width: 140px;
   margin-left: 20px;
   overflow: hidden;
-  background: #2a2a2a;
-  border: #555555;
+  background: #424242;
+  background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
 }
 
 .card-label {
