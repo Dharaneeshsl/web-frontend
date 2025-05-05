@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios"; // Import Axios for API requests
+import axios from "axios";
 import "./generate.css";
 import model1 from "./assets/model1.png";
 import model2 from "./assets/model2.png";
@@ -7,26 +7,24 @@ import model3 from "./assets/model3.png";
 import { data } from "react-router-dom";
 
 function Generate() {
-  const [selectedModel, setSelectedModel] = useState(null); // State to store the selected model
-  const [url, setUrl] = useState(""); // State to store the entered URL
-  const [isValidUrl, setIsValidUrl] = useState(true); // State to track if the URL is valid
-  const [qrCode, setQrCode] = useState(null); // State to store the generated QR code
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [url, setUrl] = useState("");
+  const [isValidUrl, setIsValidUrl] = useState(true);
+  const [qrCode, setQrCode] = useState(null);
 
   const handleModelClick = (model) => {
-    setSelectedModel(model); // Update the selected model
+    setSelectedModel(model);
   };
 
-  // Validate URL on change
   const handleUrlChange = (e) => {
     const inputUrl = e.target.value;
     setUrl(inputUrl);
 
-    // Validate the URL using the URL constructor
     try {
-      new URL(inputUrl); // If this succeeds, the URL is valid
+      new URL(inputUrl);
       setIsValidUrl(true);
     } catch (error) {
-      setIsValidUrl(false); // If it throws an error, the URL is invalid
+      setIsValidUrl(false);
     }
   };
 
@@ -41,20 +39,75 @@ function Generate() {
     }
 
     try {
-      // Make an API request to send the URL and shape
+      const corsProxy = "https://cors-anywhere.herokuapp.com/";
+      const apiUrl = "https://api.qrcode-monkey.com/qr/custom";
       const response = await axios.post(
-        "http://127.0.0.1:5000/generate_qr", // Replace with your backend API URL
-        {
-          data: url,
-          shape: selectedModel, // Send the selected model as the shape
-        },
-        { responseType: "blob" } // Expecting an image blob as the response
+        corsProxy + apiUrl,
+        selectedModel === 1
+          ? {
+              data: url,
+              config: {
+                body: "circle",
+                eye: "frame0",
+                eyeBall: "ball0",
+                bodyColor: "#FFFFFF",
+                bgColor: "#00000000",
+                eye1Color: "#FFFFFF",
+                eye2Color: "#FFFFFF",
+                eye3Color: "#FFFFFF",
+                eyeBall1Color: "#FFFFFF",
+                eyeBall2Color: "#FFFFFF",
+                eyeBall3Color: "#FFFFFF",
+              },
+              size: 1000,
+              download: "imageUrl",
+              file: "png",
+            }
+          : selectedModel === 2
+          ? {
+              data: url,
+              config: {
+                body: "square",
+                eye: "frame0",
+                eyeBall: "ball0",
+                bodyColor: "#FFFFFF",
+                bgColor: "#00000000",
+                eye1Color: "#FFFFFF",
+                eye2Color: "#FFFFFF",
+                eye3Color: "#FFFFFF",
+                eyeBall1Color: "#FFFFFF",
+                eyeBall2Color: "#FFFFFF",
+                eyeBall3Color: "#FFFFFF",
+              },
+              size: 1000,
+              download: "imageUrl",
+              file: "png",
+            }
+          : {
+              data: url,
+              config: {
+                body: "circle-zebra-vertical",
+                eye: "frame0",
+                eyeBall: "ball0",
+                bodyColor: "#FFFFFF",
+                bgColor: "#00000000",
+                eye1Color: "#FFFFFF",
+                eye2Color: "#FFFFFF",
+                eye3Color: "#FFFFFF",
+                eyeBall1Color: "#FFFFFF",
+                eyeBall2Color: "#FFFFFF",
+                eyeBall3Color: "#FFFFFF",
+              },
+              size: 1000,
+              download: "imageUrl",
+              file: "png",
+            },
+        { responseType: "blob" }
       );
 
-      // Convert the response blob to an image URL
       const qrBlob = new Blob([response.data], { type: "image/png" });
       const qrUrl = URL.createObjectURL(qrBlob);
-      setQrCode(qrUrl); // Update the QR code state
+      setQrCode(qrUrl);
     } catch (error) {
       console.error("Error generating QR code:", error);
       alert("Failed to generate QR code. Please try again.");
@@ -75,7 +128,7 @@ function Generate() {
               placeholder="Enter your URL"
               id="url_input"
               value={url}
-              onChange={handleUrlChange} // Validate on change
+              onChange={handleUrlChange}
               required
             />
             {!isValidUrl && (
@@ -87,7 +140,7 @@ function Generate() {
               <button
                 className="generate-btn"
                 onClick={handleGenerate}
-                disabled={!isValidUrl || !url} // Disable button if URL is invalid or empty
+                disabled={!isValidUrl || !url}
               >
                 Generate
               </button>
