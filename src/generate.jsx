@@ -102,11 +102,12 @@ function Generate() {
               download: "imageUrl",
               file: "png",
             },
-        { responseType: "blob" }
+        
       );
 
-      const qrBlob = new Blob([response.data], { type: "image/png" });
-      const qrUrl = URL.createObjectURL(qrBlob);
+      console.log("API Response:", response.data);
+
+      const qrUrl = response.data.imageUrl;
       setQrCode(qrUrl);
     } catch (error) {
       console.error("Error generating QR code:", error);
@@ -120,7 +121,9 @@ function Generate() {
         <h1>Generate</h1>
         <div className="flexbox">
           <div className="qr-output">
-            {qrCode && <img className="qrimg" src={qrCode} alt="Generated QR Code" />}
+            {qrCode && (
+              <img className="qrimg" src={qrCode} alt="Generated QR Code" />
+            )}
           </div>
           <div className="url_input">
             <input
@@ -132,7 +135,15 @@ function Generate() {
               required
             />
             {!isValidUrl && (
-              <p style={{ color: "white", fontSize: "12px",position: "absolute", bottom: "-50px", left: "10px" }}>
+              <p
+                style={{
+                  color: "white",
+                  fontSize: "12px",
+                  position: "absolute",
+                  bottom: "-50px",
+                  left: "10px",
+                }}
+              >
                 Please enter a valid URL.
               </p>
             )}
