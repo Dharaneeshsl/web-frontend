@@ -4,6 +4,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Lenis from "@studio-freight/lenis";
+import { MdMargin } from 'react-icons/md';
 
 gsap.registerPlugin(ScrollTrigger);
 function ScrollCards() {
@@ -80,7 +81,17 @@ function ScrollCards() {
                 <img src={asset2} alt="" />
               </div>
               <div className="card-content">
-                <p>short/dejde</p>
+              <span>
+              <span className="label">Created at:</span>{" "}
+              <span className="value">12 Feb</span>
+            </span>
+            <span>
+              <span className="label">Expiry at:</span>{" "}
+              <span className="value">15 Feb</span>
+            </span>
+            
+                <p >short/dejde</p>
+                <p><a href="/dashboard">View Analytics&gt;&gt;&gt;</a></p>
               </div>
             </div>
             <div className="hiscard">
@@ -88,7 +99,16 @@ function ScrollCards() {
                 <img src={asset2} alt="" />
               </div>
               <div className="card-content">
+              <span>
+              <span className="label">Created at:</span>{" "}
+              <span className="value">12 Feb</span>
+            </span>
+            <span>
+              <span className="label">Expiry at:</span>{" "}
+              <span className="value">15 Feb</span>
+            </span>
                 <p>short/sjdoij</p>
+                <p><a href="/dashboard">View Analytics&gt;&gt;&gt;</a></p>
               </div>
             </div>
             <div className="hiscard">
@@ -96,7 +116,16 @@ function ScrollCards() {
                 <img src={asset2} alt="" />
               </div>
               <div className="card-content">
+              <span>
+              <span className="label">Created at:</span>{" "}
+              <span className="value">12 Feb</span>
+            </span>
+            <span>
+              <span className="label">Expiry at:</span>{" "}
+              <span className="value">15 Feb</span>
+            </span>
                 <p>short/dejde</p>
+                <p><a href="/dashboard">View Analytics&gt;&gt;&gt;</a></p>
               </div>
             </div>
             <div className="hiscard">
@@ -104,7 +133,16 @@ function ScrollCards() {
                 <img src={asset2} alt="" />
               </div>
               <div className="card-content">
+              <span>
+              <span className="label">Created at:</span>{" "}
+              <span className="value">12 Feb</span>
+            </span>
+            <span>
+              <span className="label">Expiry at:</span>{" "}
+              <span className="value">15 Feb</span>
+            </span>
                 <p>short/sjdoij</p>
+                <p><a href="/dashboard  ">View Analytics&gt;&gt;&gt;</a></p>
               </div>
             </div>
             <div className="hiscard empty"> </div>
