@@ -41,7 +41,7 @@ function ScrollCards() {
         : window.innerWidth * 2.5;
     };
 
-    const arcAngle = Math.PI * 0.4;
+    const arcAngle = Math.PI * 0.7;
     const startAngle = Math.PI / 2 - arcAngle / 2;
 
     function positionCards(progress = 0) {

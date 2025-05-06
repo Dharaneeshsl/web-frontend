@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import "./generate.css";
 import model1 from "./assets/model1.png";
 import model2 from "./assets/model2.png";
 import model3 from "./assets/model3.png";
-import { data } from "react-router-dom";
+import { RefreshContext } from "./RefreshContext.jsx";
 
 function Generate() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [url, setUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(true);
   const [qrCode, setQrCode] = useState(null);
+  const { triggerRefresh } = useContext(RefreshContext); // Access the context
 
   const handleModelClick = (model) => {
     setSelectedModel(model);
@@ -101,8 +102,7 @@ function Generate() {
               size: 1000,
               download: "imageUrl",
               file: "png",
-            },
-        
+            }
       );
 
       console.log("API Response:", response.data);
@@ -113,6 +113,16 @@ function Generate() {
       console.error("Error generating QR code:", error);
       alert("Failed to generate QR code. Please try again.");
     }
+
+    axios
+      .post("http://localhost:5000/shorten/shorten", { longUrl: url })
+      .then((response) => {
+        console.log("API Response:", response.data);
+        triggerRefresh(); // Notify Recents to refresh
+      })
+      .catch((error) => {
+        console.error("Error making POST request:", error);
+      });
   };
 
   return (

@@ -172,18 +172,22 @@ a {
 }
 
 .card-value {
-  font-size: 3rem;
+  font-size: 2.8rem;
+  margin: 0;
   font-weight: 600;
   color: #ffffff;
 }
+.exp{
+  width: 200px;
+}
 
 .large-value {
-  font-size: 8.6rem;
+  font-size: 6rem;
   font-weight: 700;
   line-height: 1;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-left: 18px;
+ margin: 0;
+ margin-top: 20px;
+ margin-left: 0px;
 }
 
 .ctr-card {

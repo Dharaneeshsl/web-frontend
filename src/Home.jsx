@@ -3,6 +3,7 @@ import './Home.css';
 import Navbar from './navbar.jsx';
 import Recents from './recents.jsx';
 import Generate from './generate.jsx';
+import { RefreshProvider } from './RefreshContext.jsx';
 
 function Home() {
   useEffect(() => {
@@ -51,12 +52,13 @@ function Home() {
       <div className="nav" id='nav'>
         <Navbar />
       </div>
-      <div className="Recents" id='Recents'>
+     <RefreshProvider> <div className="Recents" id='Recents'>
         <Recents />
       </div>
       <div className="generate-section">
         <Generate />
       </div>
+      </RefreshProvider>
       
     </div>
   );
