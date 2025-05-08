@@ -127,3 +127,9 @@ justify-content: center;
   object-fit: cover;
    
 }
+#contributors{
+    position: fixed;
+   bottom: 50px;
+   left: 40px;
+    
+}

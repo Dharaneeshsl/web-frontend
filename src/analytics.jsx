@@ -71,6 +71,7 @@ function Analytics() {
   const highlightedPoint = mainChartData.find((p) => p.uv === 870);
 
   return (
+    <div className="rootforanalytics">
     <div className="dashboard-cont">
       <img src={logo} alt="" className="gold-logo" />
       <div className="dashboard-grid">
@@ -317,6 +318,7 @@ function Analytics() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

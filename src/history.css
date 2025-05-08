@@ -34,13 +34,15 @@
   right: 0;
   top: 0;
   display: flex;
+  overflow: visible;
 }
 
 .logo > h1 {
-  padding-left: 120px;
+ 
   z-index: 200;
   position: fixed;
-  left: 0;
+  left: 120px;
+ 
   top: 55%;
   margin: 0;
   display: flex;

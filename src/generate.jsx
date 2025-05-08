@@ -7,12 +7,31 @@ import model3 from "./assets/model3.png";
 import { RefreshContext } from "./RefreshContext.jsx";
 
 function Generate() {
+  
   const [selectedModel, setSelectedModel] = useState(null);
   const [url, setUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(true);
-  const [qrCode, setQrCode] = useState(null);
-  const { triggerRefresh } = useContext(RefreshContext); // Access the context
-
+  const [qrCodeBase64, setQrCodeBase64] = useState(null);
+  const [localQrCode,setLocalQrCode] = useState(null) // State to store the Base64 string
+  const { triggerRefresh,setQrCode,qrCode} = useContext(RefreshContext); // Access the context
+  async function convertImageToBase64(imageUrl) {
+    try {
+      // Fetch the image as a Blob
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+  
+      // Convert the Blob to a Base64 string
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result); // Base64 string
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Error converting image to Base64:", error);
+      throw error;
+    }
+  }
   const handleModelClick = (model) => {
     setSelectedModel(model);
   };
@@ -109,13 +128,22 @@ function Generate() {
 
       const qrUrl = response.data.imageUrl;
       setQrCode(qrUrl);
+      setLocalQrCode(qrUrl); // Store the QR code URL in state
+  convertImageToBase64(corsProxy+qrUrl)
+  .then((base64String) => {
+    setQrCodeBase64(base64String); // Store the Base64 string in state
+    // You can now store the base64String as needed
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
     } catch (error) {
       console.error("Error generating QR code:", error);
       alert("Failed to generate QR code. Please try again.");
     }
 
     axios
-      .post("http://localhost:5000/shorten/shorten", { longUrl: url })
+      .post("http://localhost:5000/shorten/shorten", { longUrl: url , qrCodeENC : qrCodeBase64})
       .then((response) => {
         console.log("API Response:", response.data);
         triggerRefresh(); // Notify Recents to refresh
@@ -131,9 +159,9 @@ function Generate() {
         <h1>Generate</h1>
         <div className="flexbox">
           <div className="qr-output">
-            {qrCode && (
-              <img className="qrimg" src={qrCode} alt="Generated QR Code" />
-            )}
+          {localQrCode ? (
+    <img className="qrimg" src={localQrCode} alt="Generated QR Code" />
+  ) : null}
           </div>
           <div className="url_input">
             <input

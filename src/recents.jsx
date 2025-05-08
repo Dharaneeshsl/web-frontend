@@ -8,13 +8,31 @@ import { useContext } from "react";
 
 
 function Recents() {
-  const { refreshKey,triggerRefresh } = useContext(RefreshContext); // Access the refreshKey
+  const { refreshKey,triggerRefresh ,qrCode} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
-  const [clicks, setClicks] = useState(0);
+  const [clicks, setClicks] = useState(18);
   const [expiryDate, setExpiryDate] = useState("23/04");
   const [shortCode, setShortCode] = useState("short/whg6u");
 
   useEffect(() => {
+    const dashboard = document.querySelector('.dashboard-container');
+
+    if (dashboard) {
+      dashboard.addEventListener('mousemove', (e) => {
+        const rect = dashboard.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+  
+        dashboard.style.setProperty('--x', `${x}%`);
+        dashboard.style.setProperty('--y', `${y}%`);
+      });
+    }
+  
+    return () => {
+      if (dashboard) {
+        dashboard.removeEventListener('mousemove', () => {});
+      }
+    };
     axios
       .get("http://127.0.0.1:5000/analytics/recent")
       .then((response) => {
@@ -55,6 +73,7 @@ function Recents() {
   }
 
   return (
+    
     <div className="dashboard-container">
       <div className="childelements">
         <div className="title">
@@ -64,7 +83,7 @@ function Recents() {
         <div className="card-grid">
           <div className="card qr-card qrpos">
             <div className="qr-img">
-              <img src={model1} alt="QR Code" />
+              <img src={qrCode} alt="QR Code" />
               <div className="qr-content">
                 <a href="###" onClick={handleAnchorClick}>
                   <p className="qr-link">short/{shortCode}</p>

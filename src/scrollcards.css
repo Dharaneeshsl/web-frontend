@@ -8,7 +8,7 @@
     position: absolute;
     background: #424242;
   background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
-    overflow: auto;
+   overflow-x: hidden;
   }
   
   section{

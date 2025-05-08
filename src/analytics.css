@@ -5,9 +5,19 @@ transform: translateX(123px);
   width: 93%;
   z-index: 1;
   border-radius: 50px 0 0 0;
+  overflow: hidden;
 
   background: #424242;
   background: linear-gradient(180deg, rgb(16, 16, 16) 0%, rgb(0, 0, 0) 100%);
+}
+.rootforanalytics{
+ overflow: hidden;
+ height: 100vh;
+ width: 100%;
+ position: relative;
+ 
+ 
+ pointer-events: all;
 }
 .dashboard-grid {
   position: absolute;
