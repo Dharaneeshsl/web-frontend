@@ -81,7 +81,8 @@ export default function Contributors() {
   const headref = useRef(null);
 
   useEffect(() => {
-    const headRef=headref.current
+    gsap.registerPlugin(SplitText);
+    const headRef = headref.current;
     const follow = followRef.current;
     const gallery = galleryRef.current;
     const but = butRef.current;
@@ -97,17 +98,26 @@ export default function Contributors() {
       duration: 3,
       ease: "power3.inOut",
     });
-    document.fonts.ready.then(() => {
-        // Initialize SplitText after fonts are loaded
-        const split = SplitText.create(headRef, { type: "char" });
-        console.log(split);
-      });
+
+    const heading = document.querySelector(".heading h1");
+
+    // Initialize SplitText after fonts are loaded
+    const split = new SplitText(heading, { type: "chars" });
+
+    console.log(split);
+    gsap.fromTo(
+      split.chars,
+      {
+        y: -100,
+      },
+      { y: 0, duration: 2, stagger: 0.05, ease: "power1.inOut" }
+    );
 
     gsap.set(but, { width: 0 });
     gsap.fromTo(
       but,
       { width: 0 },
-      { width: 150, duration: 3, ease: "power3.inOut" }
+      { width: 150, duration: 4, ease: "power3.inOut" }
     );
     let s;
 
@@ -217,8 +227,12 @@ export default function Contributors() {
     <>
       <div className="contrib-container">
         <div className="firstframe" ref={firstFrame}>
-            <div > <h1 ref={headref} >CONTRIBUTORS</h1></div>
-         
+          <div className="wrapheading">
+            <div className="heading">
+              {" "}
+              <h1 ref={headref}>CONTRIBUTORS</h1>
+            </div>
+          </div>
           <div className="viewbtn" ref={butRef}>
             <button className="here">Here</button>{" "}
             <div className="svgbg" ref={svgarrow}>
