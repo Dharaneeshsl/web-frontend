@@ -110,7 +110,17 @@ export default function Contributors() {
       {
         y: -100,
       },
-      { y: 0, duration: 2, stagger: 0.05, ease: "power1.inOut" }
+      {
+        y: 0,
+        duration: 0.5,
+        stagger: {
+          each: 0.05,
+          from: "center",
+          grid: "auto",
+        },
+        ease: "power1.inOut",
+        delay: 1,
+      }
     );
 
     gsap.set(but, { width: 0 });
