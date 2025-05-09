@@ -7,19 +7,11 @@ export default function Contributors() {
   const contributors = [
     { id: 3, name: "HARI PRAKKASH S" },
     { id: 4, name: "DHARANEESH S L" },
-
     { id: 6, name: "SUBHA SUBBIAH" },
     { id: 5, name: "PRAVIN RAMANAA S" },
     { id: 7, name: "PREETHI PS" },
     { id: 1, name: "AHAMED SHALMAN H" },
     { id: 2, name: "ARRVINDH PK" },
-    { id: 1, name: "AHAMED SHALMAN H" },
-    { id: 2, name: "ARRVINDH PK" },
-    { id: 3, name: "HARI PRAKKASH S" },
-    { id: 4, name: "DHARANEESH S L" },
-    { id: 5, name: "PRAVIN RAMANAA S" },
-    { id: 6, name: "SUBHA SUBBIAH" },
-    { id: 7, name: "PREETHI PS" },
     { id: 1, name: "AHAMED SHALMAN H" },
     { id: 2, name: "ARRVINDH PK" },
     { id: 3, name: "HARI PRAKKASH S" },
@@ -73,14 +65,17 @@ export default function Contributors() {
     6: "https://plus.unsplash.com/premium_photo-1685125884825-bd5681e1d65f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTd8fGNvb2x8ZW58MHx8MHx8fDA%3D",
     7: "https://images.unsplash.com/photo-1609743298585-be801883393f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGNvb2x8ZW58MHx8MHx8fDA%3D",
   };
-  const followRef = useRef(null); // Ref for the follow container
+  const followRef = useRef(null);
   const galleryRef = useRef(null);
   const firstFrame = useRef(null);
-  const butRef = useRef(null); // Ref for the gallery container
+  const butRef = useRef(null);
   const svgarrow = useRef(null);
   const headref = useRef(null);
+  const effectRan = useRef(false);
 
   useEffect(() => {
+    if (effectRan.current) return;
+    effectRan.current = true;
     gsap.registerPlugin(SplitText);
     const headRef = headref.current;
     const follow = followRef.current;
@@ -101,7 +96,6 @@ export default function Contributors() {
 
     const heading = document.querySelector(".heading h1");
 
-    // Initialize SplitText after fonts are loaded
     const split = new SplitText(heading, { type: "chars" });
 
     console.log(split);
@@ -145,17 +139,20 @@ export default function Contributors() {
       });
     };
 
-    for (let i = 0; i < contributors.length-1; i++) {
+    for (let i = 0; i < numberOfItems; i++) {
+      const index = i % contributors.length;
       const item = document.createElement("div");
       item.className = "item";
       const p = document.createElement("p");
-      p.textContent = contributors[i].name;
+      p.textContent = contributors[index].name;
       item.appendChild(p);
       gallery.appendChild(item);
+
       const angle = i * angleIncrement;
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
       const rotation = (angle * 180) / Math.PI;
+
       gsap.set(item, {
         x: x + "px",
         y: y + "px",
@@ -164,14 +161,13 @@ export default function Contributors() {
 
       item.addEventListener("mouseover", () => {
         const img1 = document.createElement("img");
-        img1.src = idToImageMap[contributors[i].id];
+        img1.src = idToImageMap[contributors[index].id];
         img1.style.clipPath = "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)";
 
         follow.appendChild(img1);
 
         gsap.to(img1, {
           clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
-
           duration: 1,
           ease: "power3.Out",
         });
