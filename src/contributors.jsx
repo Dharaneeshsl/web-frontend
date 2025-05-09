@@ -145,7 +145,7 @@ export default function Contributors() {
       });
     };
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < contributors.length-1; i++) {
       const item = document.createElement("div");
       item.className = "item";
       const p = document.createElement("p");
