@@ -8,11 +8,11 @@ import { useContext } from "react";
 
 
 function Recents() {
-  const { refreshKey,triggerRefresh ,qrCode} = useContext(RefreshContext); // Access the refreshKey
+  const { refreshKey,triggerRefresh ,qrCode,shortCode,setShortCode} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const [clicks, setClicks] = useState(18);
   const [expiryDate, setExpiryDate] = useState("23/04");
-  const [shortCode, setShortCode] = useState("short/whg6u");
+
 
   useEffect(() => {
     const dashboard = document.querySelector('.dashboard-container');

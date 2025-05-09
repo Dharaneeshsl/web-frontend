@@ -110,19 +110,61 @@ justify-content: center;
   width: 150px;
   height: 150px;
 }
-
 .qr-output{
-    position: absolute;
-    top: 5%;
-    left: 30%;
+  background: radial-gradient(
+    circle at bottom right,
+ rgba(101, 101, 101, 0.5),
+ rgba(0, 0, 0, 1) 50%
+  );
+  
+  border-radius: 20px;
+  box-shadow: 10px 10px 50px rgba(255, 255, 255, 0.055);
   height: 250px;
-    width:   250px;
+  width: 400px;
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  display: flex;
+  justify-content: center;
+align-items: center;
+  
+  
+}
+.clickable{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: fit-content;
+position: absolute;
+bottom: 10px;
+right: 10px;
+}
+
+.response{
+  justify-content: center;
+  align-items: flex-start;
+ 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.response p{
+  margin: 8px;
+}
+ .qrgenerated{
+
+  height: 200px;
+    width:   200px;
+     margin-left: 25px
    
 }
 
 .qrimg{
-  height: 250px;
-  width:   250px;
+  mix-blend-mode: screen;
+  height: 200px;
+  width:   200px;
+ 
  
   object-fit: cover;
    
