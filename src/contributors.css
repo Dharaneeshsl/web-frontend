@@ -86,7 +86,7 @@
    height: 100px;
    overflow: hidden;
 }
-.contrib-container a,p{
+.contrib-container a p{
     text-decoration: none;
     color: white;
     font-size: 14px;
