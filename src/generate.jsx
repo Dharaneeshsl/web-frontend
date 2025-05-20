@@ -175,7 +175,6 @@ function Generate() {
     axios
       .post("http://localhost:5000/shorten/shorten", {
         longUrl: url,
-        qrCodeENC: qrCodeBase64,
       })
       .then((response) => {
         console.log("API Response:", response.data);

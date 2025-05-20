@@ -33,20 +33,15 @@
   position: absolute;
   right: 0;
   top: 0;
-  display: flex;
+
   overflow: visible;
 }
-
-.logo > h1 {
- 
-  z-index: 200;
-  position: fixed;
-  left: 120px;
- 
-  top: 55%;
-  margin: 0;
-  display: flex;
-  font-weight: 400;
-  font-size: 16rem;
+.listcomp{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  
 }
+
+
 

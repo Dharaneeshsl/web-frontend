@@ -5,6 +5,7 @@ import History from './history.jsx';
 import Dashboard from "./Dashboard.jsx";
 import Contributors from "./contributors.jsx";
 import LandingPage from "./landingpage.jsx";
+import UrlHistory from "./urlhistory.jsx";
 function App() {
   
   return( 

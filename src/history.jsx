@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-
+import UrlHistory from "./urlhistory";
 function History() {
    useEffect(() => {const lenis = new Lenis();
 
@@ -20,9 +20,12 @@ function History() {
        <Navbar></Navbar>
        
        <div className="history-container">
+         
        <div className="curve"></div>
-       <div className="logo"><h1>History</h1></div>
-        <ScrollCards/>
+       <div className="listcomp">
+         <UrlHistory></UrlHistory></div>
+       
+       
                 
                 
          </div>

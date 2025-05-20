@@ -16,6 +16,16 @@ function Recents() {
 
   useEffect(() => {
     const dashboard = document.querySelector('.dashboard-container');
+        axios.get("http://127.0.0.1:5000/analytics/recent")
+      .then((response) => {
+        setClicks(response.data.clicks);
+        setExpiryDate(formatDate(response.data.expiryDate));
+        setShortCode(response.data.shortCode);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching recents:", error);
+      });
 
     if (dashboard) {
       dashboard.addEventListener('mousemove', (e) => {
@@ -33,17 +43,7 @@ function Recents() {
         dashboard.removeEventListener('mousemove', () => {});
       }
     };
-    axios
-      .get("http://127.0.0.1:5000/analytics/recent")
-      .then((response) => {
-        setClicks(response.data.clicks);
-        setExpiryDate(formatDate(response.data.expiryDate));
-        setShortCode(response.data.shortCode);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching recents:", error);
-      });
+
   }, [refreshKey]);
   const handleAnchorClick = (event) => {
     event.preventDefault(); // Prevent default anchor behavior
