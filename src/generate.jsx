@@ -32,7 +32,7 @@ function Generate() {
       throw error;
     }
   }
-  const handleModelClick = (model) => {
+  const handleModelClick = (model) => { 
     setSelectedModel(model);
   };
 
@@ -54,11 +54,11 @@ function Generate() {
         alert("QR code not available for download. Please generate one first.");
         return;
       }
-       
+
       const corsProxy = "https://cors-anywhere.herokuapp.com/";
 
       // Fetch the image as a Blob
-      const response = await fetch(corsProxy+localQrCode);
+      const response = await fetch(corsProxy + localQrCode);
       const blob = await response.blob();
 
       // Create a temporary anchor element
@@ -87,12 +87,9 @@ function Generate() {
       alert("Please select a QR model!");
       return;
     }
-
-    try {
-      const corsProxy = "https://cors-anywhere.herokuapp.com/";
-      const apiUrl = "https://api.qrcode-monkey.com/qr/custom";
-      const response = await axios.post(
-        corsProxy + apiUrl,
+   axios
+   .post(
+        "http://localhost:5000/shorten/qr",
         selectedModel === 1
           ? {
               data: url,
@@ -152,25 +149,17 @@ function Generate() {
               download: "imageUrl",
               file: "png",
             }
-      );
+      )
+      .then((response) => {
+        console.log("API Response:", response.data);
+        triggerRefresh(); // Notify Recents to refresh
+        setLocalQrCode(response.data.base64)
+        setQrCode(response.data.base64)
+      })
+      .catch((error) => {
+        console.error("Error making POST request:", error);
+  });
 
-      console.log("API Response:", response.data);
-
-      const qrUrl = response.data.imageUrl;
-      setQrCode(qrUrl);
-      setLocalQrCode(qrUrl); // Store the QR code URL in state
-      convertImageToBase64(corsProxy + qrUrl)
-        .then((base64String) => {
-          setQrCodeBase64(base64String); // Store the Base64 string in state
-          // You can now store the base64String as needed
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    } catch (error) {
-      console.error("Error generating QR code:", error);
-      alert("Failed to generate QR code. Please try again.");
-    }
 
     axios
       .post("http://localhost:5000/shorten/shorten", {
@@ -196,7 +185,7 @@ function Generate() {
               <div className="qrgenerated">
                 <img
                   className="qrimg"
-                  src={localQrCode}
+                  src={`data:image/png;base64,${localQrCode}`}
                   alt="Generated QR Code"
                 />
               </div>

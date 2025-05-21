@@ -83,7 +83,7 @@ function Recents() {
         <div className="card-grid">
           <div className="card qr-card qrpos">
             <div className="qr-img">
-              <img src={qrCode} alt="QR Code" />
+              {qrCode?<img src={`data:image/png;base64,${qrCode}`} />:null}
               <div className="qr-content">
                 <a href="###" onClick={handleAnchorClick}>
                   <p className="qr-link">short/{shortCode}</p>
