@@ -8,13 +8,25 @@ import { useContext } from "react";
 
 
 function Recents() {
-  const { refreshKey,triggerRefresh ,qrCode,shortCode,setShortCode} = useContext(RefreshContext); // Access the refreshKey
+  const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const [clicks, setClicks] = useState(18);
-  const [expiryDate, setExpiryDate] = useState("23/04");
+  
 
 
   useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/analytics/recent")
+      .then((response) => {
+        setClicks(response.data.clicks);
+        setExpiryDate(formatDate(response.data.expiryDate));
+        setShortCode(response.data.shortCode);
+        setQrCode(response.data.base64img);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching recents:", error);
+      });
     const dashboard = document.querySelector('.dashboard-container');
 
     if (dashboard) {
@@ -33,17 +45,7 @@ function Recents() {
         dashboard.removeEventListener('mousemove', () => {});
       }
     };
-    axios
-      .get("http://127.0.0.1:5000/analytics/recent")
-      .then((response) => {
-        setClicks(response.data.clicks);
-        setExpiryDate(formatDate(response.data.expiryDate));
-        setShortCode(response.data.shortCode);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching recents:", error);
-      });
+    
   }, [refreshKey]);
   const handleAnchorClick = (event) => {
     event.preventDefault(); // Prevent default anchor behavior
