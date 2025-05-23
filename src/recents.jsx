@@ -11,6 +11,7 @@ function Recents() {
   const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const [clicks, setClicks] = useState(18);
+  const [ctr,setCtr]= useState(69)
   
 
 
@@ -27,6 +28,7 @@ function Recents() {
       .catch((error) => {
         console.error("Error fetching recents:", error);
       });
+     
     const dashboard = document.querySelector('.dashboard-container');
 
     if (dashboard) {
@@ -39,7 +41,7 @@ function Recents() {
         dashboard.style.setProperty('--y', `${y}%`);
       });
     }
-  
+     
     return () => {
       if (dashboard) {
         dashboard.removeEventListener('mousemove', () => {});
@@ -47,6 +49,17 @@ function Recents() {
     };
     
   }, [refreshKey]);
+
+useEffect(()=>{
+axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
+      .then((response) =>{
+        console.log(response.data)
+        setCtr(response.data.ctr)
+      })
+  
+
+
+  })
   const handleAnchorClick = (event) => {
     event.preventDefault(); // Prevent default anchor behavior
     
@@ -123,7 +136,7 @@ function Recents() {
 
           <div className="card ctr-card">
             <p className="card-label ctr">CTR</p>
-            <p className="card-value rotated-value">5.32%</p>
+            <p className="card-value rotated-value">{isNaN(ctr * 100) ? "0%" : `${ctr * 100}%`}</p>
           </div>
           <div className="emp2"></div>
 

@@ -102,13 +102,17 @@ justify-content: center;
 }
 .model.active {
     transform: scale(1.1) rotateY(180deg) translateY(-20px);
-    animation: transform 1s ease;
+    animation: transform 800ms ease;
+}
+.model.active img{
+  transform: rotateY('90deg')
 }
 
 
 .model> img{
   width: 150px;
   height: 150px;
+
 }
 .qr-output{
   background: radial-gradient(

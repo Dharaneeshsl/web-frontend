@@ -4,6 +4,7 @@ import Navbar from "./navbar.jsx";
 import Recents from "./recents.jsx";
 import Generate from "./generate.jsx";
 import { RefreshProvider } from "./RefreshContext.jsx";
+import { Toaster } from 'react-hot-toast';
 
 function Home() {
   useEffect(() => {
@@ -48,7 +49,9 @@ function Home() {
   }, []);
 
   return (
+    
     <div id="rootforHome">
+            <Toaster position="bottom-center" />
       <div className="qr"></div>
       <div className="cursor" id="cursor"></div>
       <div className="nav" id="nav">
