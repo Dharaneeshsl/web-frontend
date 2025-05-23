@@ -8,13 +8,27 @@ import { useContext } from "react";
 
 
 function Recents() {
-  const { refreshKey,triggerRefresh ,qrCode,shortCode,setShortCode} = useContext(RefreshContext); // Access the refreshKey
+  const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const [clicks, setClicks] = useState(18);
-  const [expiryDate, setExpiryDate] = useState("23/04");
+  const [ctr,setCtr]= useState(69)
+  
 
 
   useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/analytics/recent")
+      .then((response) => {
+        setClicks(response.data.clicks);
+        setExpiryDate(formatDate(response.data.expiryDate));
+        setShortCode(response.data.shortCode);
+        setQrCode(response.data.base64img);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching recents:", error);
+      });
+     
     const dashboard = document.querySelector('.dashboard-container');
         axios.get("http://127.0.0.1:5000/analytics/recent")
       .then((response) => {
@@ -37,14 +51,24 @@ function Recents() {
         dashboard.style.setProperty('--y', `${y}%`);
       });
     }
-  
+     
     return () => {
       if (dashboard) {
         dashboard.removeEventListener('mousemove', () => {});
       }
     };
+}, [refreshKey]);
 
-  }, [refreshKey]);
+useEffect(()=>{
+axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
+      .then((response) =>{
+        console.log(response.data)
+        setCtr(response.data.ctr)
+      })
+  
+
+
+  })
   const handleAnchorClick = (event) => {
     event.preventDefault(); // Prevent default anchor behavior
     
@@ -83,7 +107,7 @@ function Recents() {
         <div className="card-grid">
           <div className="card qr-card qrpos">
             <div className="qr-img">
-              <img src={qrCode} alt="QR Code" />
+              {qrCode?<img src={`data:image/png;base64,${qrCode}`} />:null}
               <div className="qr-content">
                 <a href="###" onClick={handleAnchorClick}>
                   <p className="qr-link">short/{shortCode}</p>
@@ -121,7 +145,7 @@ function Recents() {
 
           <div className="card ctr-card">
             <p className="card-label ctr">CTR</p>
-            <p className="card-value rotated-value">5.32%</p>
+            <p className="card-value rotated-value">{isNaN(ctr * 100) ? "0%" : `${ctr * 100}%`}</p>
           </div>
           <div className="emp2"></div>
 

@@ -3,7 +3,6 @@ import asset2 from "./assets/asset2.png";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Lenis from "lenis";
 import { MdMargin } from 'react-icons/md';
 
 gsap.registerPlugin(ScrollTrigger);

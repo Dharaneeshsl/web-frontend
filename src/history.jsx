@@ -3,7 +3,6 @@ import "./history.css";
 import Navbar from "./navbar";
 import ScrollCards from "./scrollcards";
 import { useEffect } from "react";
-import Lenis from "lenis";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import UrlHistory from "./urlhistory";
