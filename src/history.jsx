@@ -5,7 +5,7 @@ import ScrollCards from "./scrollcards";
 import { useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-
+import UrlHistory from "./urlhistory";
 function History() {
   
     return (
@@ -13,9 +13,13 @@ function History() {
        <Navbar></Navbar>
        
        <div className="history-container">
+         
        <div className="curve"></div>
-       <div className="logo"><h1>History</h1></div>
-        <ScrollCards/>
+       <div className="listcomp">
+         <UrlHistory></UrlHistory></div>
+   
+       
+       
                 
                 
          </div>
