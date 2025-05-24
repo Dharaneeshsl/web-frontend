@@ -3,17 +3,24 @@ import "./urlhistory.css";
 import Navbar from "./navbar";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import model1 from './assets/model1.png'
+import model1 from "./assets/model1.png";
+import { useAuth } from "./AuthContext";
+
+
 export default function UrlHistory() {
+
+  const { userid } = useAuth();
   const scrollRef = useRef(null);
   const outRef = useRef(null);
   const [record, setRecord] = useState([]);
-
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/analytics/all").then((response) => {
-      setRecord(response);
-      console.log(response.data);
-    });
+    console.log(localStorage.getItem("userid"))
+    axios
+      .post("http://127.0.0.1:5000/analytics/all", { userid: userid })
+      .then((response) => {
+        setRecord(response);
+        console.log(response.data);
+      });
     const el = scrollRef.current;
     const out = outRef.current;
 
@@ -73,8 +80,9 @@ export default function UrlHistory() {
                   <div className="items" key={idx}>
                     <img src={model1} alt="" />
                     <div className="info">
-                    <p>{item.longUrl}</p>
-                    <p>short/{item.shortCode}</p></div>
+                      <p>{item.longUrl}</p>
+                      <p>short/{item.shortCode}</p>
+                    </div>
                   </div>
                 ))}
               <div className="nullitem"></div>

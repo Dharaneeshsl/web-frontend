@@ -5,11 +5,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RefreshContext,RefreshProvider } from "./RefreshContext.jsx";
 import { useContext } from "react";
+import { useAuth } from "./AuthContext.jsx";
 
 
 function Recents() {
   const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
+  const {userid}=useAuth();
   const [clicks, setClicks] = useState(18);
   const [ctr,setCtr]= useState(0.69)
   
@@ -17,7 +19,9 @@ function Recents() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/analytics/recent")
+      .post("http://127.0.0.1:5000/analytics/recent",{
+        userid:userid
+      })
       .then((response) => {
         setClicks(response.data.clicks);
         setExpiryDate(formatDate(response.data.expiryDate));
