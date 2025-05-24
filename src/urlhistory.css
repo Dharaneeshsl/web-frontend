@@ -1,0 +1,71 @@
+.listbg{
+     background-color: rgb(15, 15, 15);
+      height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+   
+
+
+}
+.listcont{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 800px;
+    width: 100%;
+  overflow: hidden;
+
+    transform: translate(-50%,-50%);
+    z-index: 100;
+    pointer-events: auto;
+
+}
+.itemlist{
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+}
+.nullitem{
+ width: 600px;
+    height: 150px;
+}
+
+.items{
+    background-color: black;
+    border-radius: 20px;
+    width: 600px;
+    height: 200px;
+     transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.3;
+  transform: scale(1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+font-size: 0.8rem;
+   
+}
+.logo > h1 {
+    pointer-events: none;
+ 
+  z-index: 2;
+  position: fixed;
+  left: 120px;
+ 
+  top: 55%;
+  margin: 0;
+  display: flex;
+  font-weight: 400;
+  font-size: 16rem;
+}
+.active {
+  transform: scale(1.2);
+  opacity: 1;
+}

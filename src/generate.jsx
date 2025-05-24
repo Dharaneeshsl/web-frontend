@@ -5,6 +5,7 @@ import model1 from "./assets/model1.png";
 import model2 from "./assets/model2.png";
 import model3 from "./assets/model3.png";
 import { RefreshContext } from "./RefreshContext.jsx";
+import toast from "react-hot-toast";
 
 function Generate() {
   const [selectedModel, setSelectedModel] = useState(null);
@@ -12,32 +13,16 @@ function Generate() {
   const [isValidUrl, setIsValidUrl] = useState(true);
   const [qrCodeBase64, setQrCodeBase64] = useState(null);
   const [localQrCode, setLocalQrCode] = useState(null); // State to store the Base64 string
-  const { triggerRefresh, setQrCode, qrCode, shortCode } =
+  const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =
     useContext(RefreshContext); // Access the context
-  async function convertImageToBase64(imageUrl) {
-    try {
-      // Fetch the image as a Blob
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
 
-      // Convert the Blob to a Base64 string
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result); // Base64 string
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error("Error converting image to Base64:", error);
-      throw error;
-    }
-  }
-  const handleModelClick = (model) => { 
-    setSelectedModel(model);
+  const handleModelClick = (model) => {
+    setSelectedModel((prev) => (prev === model ? null : model));
   };
 
   const handleUrlChange = (e) => {
     const inputUrl = e.target.value;
+    console.log(inputUrl);
     setUrl(inputUrl);
 
     try {
@@ -55,23 +40,11 @@ function Generate() {
         return;
       }
 
-      const corsProxy = "https://cors-anywhere.herokuapp.com/";
-
-      // Fetch the image as a Blob
-      const response = await fetch(corsProxy + localQrCode);
-      const blob = await response.blob();
-
-      // Create a temporary anchor element
       const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob); // Create a Blob URL
-      link.download = "qrcode.png"; // Set the default file name for the download
+      link.href = `data:image/png;base64,${localQrCode}`;
+      link.download = "qrcode.png";
       document.body.appendChild(link);
-
-      // Programmatically trigger the click event
       link.click();
-
-      // Clean up the Blob URL and remove the anchor element
-      URL.revokeObjectURL(link.href);
       document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading the file:", error);
@@ -80,99 +53,113 @@ function Generate() {
 
   const handleGenerate = async () => {
     if (!url || !isValidUrl) {
-      alert("Please enter a valid URL!");
+      toast.error("Enter a valid URL", {
+        style: {
+          padding: "16px",
+          color: "black",
+        },
+        iconTheme: {
+          primary: "black",
+          secondary: "white",
+        },
+      });
+
       return;
     }
     if (!selectedModel) {
-      alert("Please select a QR model!");
+      toast.error("Select a QR Model", {
+        style: {
+          padding: "16px",
+          color: "black",
+        },
+        iconTheme: {
+          primary: "black",
+          secondary: "white",
+        },
+      });
       return;
     }
-   axios
-   .post(
-        "http://localhost:5000/shorten/qr",
-        selectedModel === 1
-          ? {
-              data: url,
-              config: {
-                body: "circle",
-                eye: "frame0",
-                eyeBall: "ball0",
-                bodyColor: "#FFFFFF",
-                bgColor: "#00000000",
-                eye1Color: "#FFFFFF",
-                eye2Color: "#FFFFFF",
-                eye3Color: "#FFFFFF",
-                eyeBall1Color: "#FFFFFF",
-                eyeBall2Color: "#FFFFFF",
-                eyeBall3Color: "#FFFFFF",
-              },
-              size: 1000,
-              download: "imageUrl",
-              file: "png",
-            }
-          : selectedModel === 2
-          ? {
-              data: url,
-              config: {
-                body: "square",
-                eye: "frame0",
-                eyeBall: "ball0",
-                bodyColor: "#FFFFFF",
-                bgColor: "#00000000",
-                eye1Color: "#FFFFFF",
-                eye2Color: "#FFFFFF",
-                eye3Color: "#FFFFFF",
-                eyeBall1Color: "#FFFFFF",
-                eyeBall2Color: "#FFFFFF",
-                eyeBall3Color: "#FFFFFF",
-              },
-              size: 1000,
-              download: "imageUrl",
-              file: "png",
-            }
-          : {
-              data: url,
-              config: {
-                body: "circle-zebra-vertical",
-                eye: "frame0",
-                eyeBall: "ball0",
-                bodyColor: "#FFFFFF",
-                bgColor: "#00000000",
-                eye1Color: "#FFFFFF",
-                eye2Color: "#FFFFFF",
-                eye3Color: "#FFFFFF",
-                eyeBall1Color: "#FFFFFF",
-                eyeBall2Color: "#FFFFFF",
-                eyeBall3Color: "#FFFFFF",
-              },
-              size: 1000,
-              download: "imageUrl",
-              file: "png",
-            }
-      )
-      .then((response) => {
-        console.log("API Response:", response.data);
-        triggerRefresh(); // Notify Recents to refresh
-        setLocalQrCode(response.data.base64)
-        setQrCode(response.data.base64)
-      })
-      .catch((error) => {
-        console.error("Error making POST request:", error);
-  });
-
-
+    
+toast.promise(
     axios
       .post("http://localhost:5000/shorten/shorten", {
         longUrl: url,
-        qrCodeENC: qrCodeBase64,
+        qrRender:
+          selectedModel === 1
+            ? {
+                data: url,
+                config: {
+                  body: "circle",
+                  eye: "frame0",
+                  eyeBall: "ball0",
+                  bodyColor: "#FFFFFF",
+                  bgColor: "#00000000",
+                  eye1Color: "#FFFFFF",
+                  eye2Color: "#FFFFFF",
+                  eye3Color: "#FFFFFF",
+                  eyeBall1Color: "#FFFFFF",
+                  eyeBall2Color: "#FFFFFF",
+                  eyeBall3Color: "#FFFFFF",
+                },
+                size: 1000,
+                download: "imageUrl",
+                file: "png",
+              }
+            : selectedModel === 2
+            ? {
+                data: url,
+                config: {
+                  body: "square",
+                  eye: "frame0",
+                  eyeBall: "ball0",
+                  bodyColor: "#FFFFFF",
+                  bgColor: "#00000000",
+                  eye1Color: "#FFFFFF",
+                  eye2Color: "#FFFFFF",
+                  eye3Color: "#FFFFFF",
+                  eyeBall1Color: "#FFFFFF",
+                  eyeBall2Color: "#FFFFFF",
+                  eyeBall3Color: "#FFFFFF",
+                },
+                size: 1000,
+                download: "imageUrl",
+                file: "png",
+              }
+            : {
+                data: url,
+                config: {
+                  body: "circle-zebra-vertical",
+                  eye: "frame0",
+                  eyeBall: "ball0",
+                  bodyColor: "#FFFFFF",
+                  bgColor: "#00000000",
+                  eye1Color: "#FFFFFF",
+                  eye2Color: "#FFFFFF",
+                  eye3Color: "#FFFFFF",
+                  eyeBall1Color: "#FFFFFF",
+                  eyeBall2Color: "#FFFFFF",
+                  eyeBall3Color: "#FFFFFF",
+                },
+                size: 1000,
+                download: "imageUrl",
+                file: "png",
+              },
       })
-      .then((response) => {
+      , {
+          loading: 'Generating QR code...',
+      success: ((response) => {
         console.log("API Response:", response.data);
         triggerRefresh(); // Notify Recents to refresh
-      })
-      .catch((error) => {
+        setLocalQrCode(response.data.base64img);
+        setQrCode(response.data.base64img);
+        return 'QR code generated!';
+      }),
+      error: ((error) => {
         console.error("Error making POST request:", error);
-      });
+        return 'Failed to generate QR code!';
+      })
+    })
+    ;
   };
 
   return (
@@ -191,7 +178,7 @@ function Generate() {
               </div>
               <div className="response">
                 <p>short/{shortCode}</p>
-                <p>Expires : 24 AUG</p>
+                <p>Expires :{expiryDate}</p>
                 <div className="clickable">
                   <button
                     className="copy-button"
@@ -278,11 +265,7 @@ function Generate() {
               </p>
             )}
             <div className="genbtn">
-              <button
-                className="generate-btn"
-                onClick={handleGenerate}
-                disabled={!isValidUrl || !url}
-              >
+              <button className="generate-btn" onClick={handleGenerate}>
                 Generate
               </button>
             </div>

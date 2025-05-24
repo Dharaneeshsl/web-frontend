@@ -200,7 +200,7 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-height: 140px;
+  height: 180px;
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 10px;
