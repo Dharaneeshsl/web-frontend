@@ -1,14 +1,28 @@
 import { useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import "./navbar.css";
+
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout =(e)=>{
+e.preventDefault()
+localStorage.removeItem('accessToken');
+navigate("/login");
+  }
+
+
+  
    useEffect(()=>{
      let cursor = document.querySelector(".cursor");
     window.addEventListener("mousemove", (e) => {
       let cursor = document.getElementById("cursor");
+
       setTimeout(() => {
-        cursor.style.top = `${e.clientY}px`;
-        cursor.style.left = `${e.clientX}px`;
-   
+        if (cursor) {
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.left = `${e.clientX}px`;
+  }
       }, 50);
     });
 
@@ -20,21 +34,21 @@ function Navbar() {
           el.tagName === "A" ||
           el.tagName === "BUTTON"
         ) {
-          cursor.classList.add("active");
+          cursor.classList.add("curactive");
         }
       });
       el.addEventListener("mouseleave", () => {
-        cursor.classList.remove("active");
+        cursor.classList.remove("curactive");
       });
     });
   })
 
   return (
-    <div id="container">
+    <div id="navbarcontainer">
         <div className="cursor" id="cursor"></div>
       <div className="icons">
         <div>
-          <a href="/">
+          <a href="#" onClick={handleLogout}>
             <svg
               id="login"
               xmlns="http://www.w3.org/2000/svg"

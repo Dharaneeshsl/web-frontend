@@ -6,8 +6,10 @@ import model2 from "./assets/model2.png";
 import model3 from "./assets/model3.png";
 import { RefreshContext } from "./RefreshContext.jsx";
 import toast from "react-hot-toast";
+import { useAuth } from "./AuthContext.jsx";
 
 function Generate() {
+  const {userid}=useAuth();
   const [selectedModel, setSelectedModel] = useState(null);
   const [url, setUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(true);
@@ -15,6 +17,8 @@ function Generate() {
   const [localQrCode, setLocalQrCode] = useState(null); // State to store the Base64 string
   const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =
     useContext(RefreshContext); // Access the context
+  
+  console.log(userid)
 
   const handleModelClick = (model) => {
     setSelectedModel((prev) => (prev === model ? null : model));
@@ -52,6 +56,7 @@ function Generate() {
   };
 
   const handleGenerate = async () => {
+    console.log(userid)
     if (!url || !isValidUrl) {
       toast.error("Enter a valid URL", {
         style: {
@@ -83,6 +88,7 @@ function Generate() {
 toast.promise(
     axios
       .post("http://localhost:5000/shorten/shorten", {
+        userid:userid,
         longUrl: url,
         qrRender:
           selectedModel === 1
@@ -272,19 +278,19 @@ toast.promise(
           </div>
           <div className="qrmodels">
             <div
-              className={`model ${selectedModel === 1 ? "active" : ""}`}
+              className={`model ${selectedModel === 1 ? "modactive" : ""}`}
               onClick={() => handleModelClick(1)}
             >
               <img src={model1} alt="Model 1" />
             </div>
             <div
-              className={`model ${selectedModel === 2 ? "active" : ""}`}
+              className={`model ${selectedModel === 2 ? "modactive" : ""}`}
               onClick={() => handleModelClick(2)}
             >
               <img src={model2} alt="Model 2" />
             </div>
             <div
-              className={`model ${selectedModel === 3 ? "active" : ""}`}
+              className={`model ${selectedModel === 3 ? "modactive" : ""}`}
               onClick={() => handleModelClick(3)}
             >
               <img src={model3} alt="Model 3" />
