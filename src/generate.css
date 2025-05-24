@@ -100,12 +100,9 @@ justify-content: center;
 .model:hover{
     transform: scale(1.1); 
 }
-.model.active {
+.model.modactive {
     transform: scale(1.1) rotateY(180deg) translateY(-20px);
     animation: transform 800ms ease;
-}
-.model.active img{
-  transform: rotateY('90deg')
 }
 
 

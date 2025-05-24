@@ -4,24 +4,27 @@
 
 .main{
     background-color: #101114;
-    background: linear-gradient(to right, #393838, #080809);
+    background: linear-gradient(to right, #151515, #080809);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 100vh;
 }
-
+.containerin{
+    background-color: rgb(0, 0, 0);
+    height: 100%;
+    width: 100%;
+}
 .container{
-    background-color: white;
+    height: 480px;
+    width: 780px;
+
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-    border-color: black;
+    
 }
 
 .container p{
@@ -55,6 +58,16 @@
     padding: 0 40px;
     height: 100%;
 }
+.whitebg{
+    position: absolute;
+    left: 20%;
+    height: 100%;
+    width: 50%;
+    background-color: #ffffff;
+}
+.loginlogo{
+  position: absolute;
+ }
 
 .container input{
     background-color: #4d4c4c;
@@ -70,6 +83,7 @@
 .form-container{
     position: absolute;
     top: 0;
+
     height: 100%;
     transition: all 0.6s ease-in-out;
 }
@@ -85,6 +99,7 @@
 }
 
 .sign-up{
+    position: absolute;
     left: 0;
     width: 50%;
     opacity: 0;
@@ -112,14 +127,16 @@
 
 
 .toggle-container{
+
     position: absolute;
     top: 0;
     left: 50%;
     width: 50%;
     height: 100%;
     overflow: hidden;
+    
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 150px 0 0 150px;
     z-index: 1000;
 }
 
@@ -131,18 +148,23 @@
 .toggle{
     background-color: #080809;
     height: 100%;
-    background: linear-gradient(to right, #080809, #080809);
+    background: linear-gradient(to right, #171717, #080809);
+   
     color: #fff;
     position: relative;
     left: -100%;
-    height: 100%;
+    height:100%;
     width: 200%;
     transform: translateX(0);
+    
     transition: all 0.6s ease-in-out;
 }
 
 .container.active .toggle{
     transform: translateX(50%);
+}
+b{
+    color: black;
 }
 
 .toggle-panel{
@@ -156,11 +178,14 @@
     padding: 0 30px;
     text-align: center;
     top: 0;
+
+    
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
 
 .toggle-left{
+       left: -25px;
     transform: translateX(-200%);
 }
 
@@ -169,10 +194,12 @@
 }
 
 .toggle-right{
-    right: 0;
+    right: -25px;
+  
     transform: translateX(0);
 }
 
 .container.active .toggle-right{
+   
     transform: translateX(200%);
 }

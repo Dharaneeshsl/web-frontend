@@ -1,5 +1,5 @@
 
-#container {
+#navbarcontainer {
   position: fixed;
   margin: 0;
   padding: 0;
@@ -61,7 +61,7 @@ svg {
   transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.cursor.active {
+.cursor.curactive {
   transform: scale(1.5);
 }
 

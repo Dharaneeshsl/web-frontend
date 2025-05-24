@@ -20,17 +20,17 @@ function Navbar() {
           el.tagName === "A" ||
           el.tagName === "BUTTON"
         ) {
-          cursor.classList.add("active");
+          cursor.classList.add("curactive");
         }
       });
       el.addEventListener("mouseleave", () => {
-        cursor.classList.remove("active");
+        cursor.classList.remove("curactive");
       });
     });
   })
 
   return (
-    <div id="container">
+    <div id="navbarcontainer">
         <div className="cursor" id="cursor"></div>
       <div className="icons">
         <div>

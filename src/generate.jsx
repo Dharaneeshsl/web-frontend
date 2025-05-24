@@ -272,19 +272,19 @@ toast.promise(
           </div>
           <div className="qrmodels">
             <div
-              className={`model ${selectedModel === 1 ? "active" : ""}`}
+              className={`model ${selectedModel === 1 ? "modactive" : ""}`}
               onClick={() => handleModelClick(1)}
             >
               <img src={model1} alt="Model 1" />
             </div>
             <div
-              className={`model ${selectedModel === 2 ? "active" : ""}`}
+              className={`model ${selectedModel === 2 ? "modactive" : ""}`}
               onClick={() => handleModelClick(2)}
             >
               <img src={model2} alt="Model 2" />
             </div>
             <div
-              className={`model ${selectedModel === 3 ? "active" : ""}`}
+              className={`model ${selectedModel === 3 ? "modactive" : ""}`}
               onClick={() => handleModelClick(3)}
             >
               <img src={model3} alt="Model 3" />

@@ -42,13 +42,13 @@ export default function UrlHistory() {
       });
 
       items.forEach((item) => {
-        item.classList.remove("active");
+        item.classList.remove("urlactive");
         item.style.opacity = "0.3";
         item.style.transform = "scale(1)";
       });
 
       if (closestItem) {
-        closestItem.classList.add("active");
+        closestItem.classList.add("urlactive");
         closestItem.style.opacity = "1";
         closestItem.style.transform = "scale(1.2)";
       }
