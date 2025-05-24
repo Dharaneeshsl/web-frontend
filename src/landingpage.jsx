@@ -12,10 +12,10 @@ export default function LandingPage() {
   function splineEvents(e) { setTimeout(() => {
         console.log(e)
         if (e.target.name === "Login"){
-            navigate("/home");
+            navigate("/login");
         
         } else if (e.target.name === "QR"){
-            navigate("/contributors");
+            navigate("/home");
         }
     },2000);
     };
