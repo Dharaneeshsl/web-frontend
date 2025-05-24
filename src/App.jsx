@@ -5,6 +5,7 @@ import History from './history.jsx';
 import Dashboard from "./Dashboard.jsx";
 import Contributors from "./contributors.jsx";
 import LandingPage from "./landingpage.jsx";
+import Login from "./login.jsx";
 function App() {
   
   return( 
@@ -15,8 +16,10 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/history" element={<History />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/contributors" element={<Contributors />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+
         </Routes>
       </div>
     </Router>);
