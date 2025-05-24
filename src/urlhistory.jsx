@@ -3,7 +3,7 @@ import "./urlhistory.css";
 import Navbar from "./navbar";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-
+import model1 from './assets/model1.png'
 export default function UrlHistory() {
   const scrollRef = useRef(null);
   const outRef = useRef(null);
@@ -71,8 +71,10 @@ export default function UrlHistory() {
               {Array.isArray(record.data) &&
                 record.data.map((item, idx) => (
                   <div className="items" key={idx}>
+                    <img src={model1} alt="" />
+                    <div className="info">
                     <p>{item.longUrl}</p>
-                    <p>short/{item.shortCode}</p>
+                    <p>short/{item.shortCode}</p></div>
                   </div>
                 ))}
               <div className="nullitem"></div>

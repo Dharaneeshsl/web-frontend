@@ -7,11 +7,12 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import UrlHistory from "./urlhistory";
 function History() {
+ 
   
     return (
        <> 
        <Navbar></Navbar>
-       
+      
        <div className="history-container">
          
        <div className="curve"></div>

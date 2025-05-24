@@ -16,6 +16,8 @@ function Home() {
         cursor.style.left = `${e.clientX}px`;
       }, 50);
     });
+    const innerElement = document.querySelector('.nav .cursor');
+    innerElement.style.display="none"
 
     document.querySelectorAll("h1, p, a, button").forEach((el) => {
       el.addEventListener("mouseenter", () => {

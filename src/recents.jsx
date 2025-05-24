@@ -11,7 +11,7 @@ function Recents() {
   const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const [clicks, setClicks] = useState(18);
-  const [ctr,setCtr]= useState(69)
+  const [ctr,setCtr]= useState(0.69)
   
 
 
