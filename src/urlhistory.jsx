@@ -16,7 +16,7 @@ export default function UrlHistory() {
   useEffect(() => {
     console.log(localStorage.getItem("userid"))
     axios
-      .post("http://127.0.0.1:5000/analytics/all", { userid: userid })
+      .post("http://127.0.0.1:5000/admin/all", { userid: userid })
       .then((response) => {
         setRecord(response);
         console.log(response.data);

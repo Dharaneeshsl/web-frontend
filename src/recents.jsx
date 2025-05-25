@@ -19,7 +19,7 @@ function Recents() {
 
   useEffect(() => {
     axios
-      .post("http://127.0.0.1:5000/analytics/recent",{
+      .post("http://127.0.0.1:5000/admin/recent",{
         userid:userid
       })
       .then((response) => {
@@ -34,16 +34,6 @@ function Recents() {
       });
      
     const dashboard = document.querySelector('.dashboard-container');
-        axios.get("http://127.0.0.1:5000/analytics/recent")
-      .then((response) => {
-        setClicks(response.data.clicks);
-        setExpiryDate(formatDate(response.data.expiryDate));
-        setShortCode(response.data.shortCode);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching recents:", error);
-      });
 
     if (dashboard) {
       dashboard.addEventListener('mousemove', (e) => {
@@ -80,7 +70,7 @@ axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
     axios
       .get(`http://127.0.0.1:5000/shorten/expand/${shortCode}`) // Replace with your API endpoint
       .then((response) => {
-        console.log("API Response:", response.data?window.open(response.data.longUrl,"_blank", "noopener"):"No data found");
+        console.log("API Response:", response.data?window.open(`http://localhost:5000/analytics/${shortCode}`,"_blank", "noopener"):"No data found");
         triggerRefresh(); 
       })
       .catch((error) => {
