@@ -10,6 +10,7 @@ import UrlHistory from "./urlhistory.jsx";
 import { AuthProvider } from "./AuthContext.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import { RefreshProvider } from "./RefreshContext.jsx";
+import { Toaster } from "react-hot-toast";
 function App() {
 
 
@@ -19,6 +20,7 @@ function App() {
     <Router>
        <AuthProvider>
         <RefreshProvider>
+          <Toaster position="bottom-center" />
       <div id="root">
         
         <Routes>

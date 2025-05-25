@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { RefreshContext } from "./RefreshContext";
+import toast from "react-hot-toast";
 
 function Login() {
     const navigate = useNavigate();
@@ -16,32 +17,38 @@ const {triggerRefresh}=useContext(RefreshContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    axios
-      .post("http://127.0.0.1:5000/auth/register", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    toast.promise(
+  axios.post("http://127.0.0.1:5000/auth/register", {
+    email: email,
+    password: password,
+  }),
+  {
+    loading: "Creating user...",
+    success: "User Created",
+    error: "User already exists",
+  }
+)
+.then((response) => {
+  console.log(response.data);
+});
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios
+    toast.promise(axios
       .post("http://127.0.0.1:5000/auth/login", {
         email: email,
         password: password,
-      })
-      .then((response) => {
+      }),{
+        loading:"Signing in",
+        success:"Signed in"
+      }).then((response) => {
         console.log(response.data.access_token);
         setAccessToken(response.data.access_token)
         localStorage.setItem("accessToken", response.data.access_token); 
         handleuserid(response.data.access_token).then(() => {
-        navigate('/home');}
+          navigate("/home")
+        }
         )
        // Save token
        
@@ -54,17 +61,23 @@ const {triggerRefresh}=useContext(RefreshContext);
   function handleuserid(token){
 
 
-   return axios
-        .get("http://127.0.0.1:5000/auth/userid", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+    return toast.promise(
+    axios.get("http://127.0.0.1:5000/auth/userid", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    {
+      loading: "Fetching user info...",
+      success: "User info loaded",
+      error: "Failed to fetch user info",
+    }
+  )
         .then((response) => {
-          
           setUserid(response.data.user_id)
           console.log(response.data.user_id);
           localStorage.setItem("userid", response.data.user_id);
+          
         triggerRefresh();
           
         })
@@ -133,7 +146,6 @@ const {triggerRefresh}=useContext(RefreshContext);
                   }}
                   placeholder="Password"
                 />
-                <a href="#">Forget Your Password?</a>
                 <button type="submit">Sign In</button>
               </form>
             </div>

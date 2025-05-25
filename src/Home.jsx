@@ -53,13 +53,12 @@ function Home() {
   return (
     
     <div id="rootforHome">
-            <Toaster position="bottom-center" />
       <div className="qr"></div>
       <div className="cursor" id="cursor"></div>
       <div className="nav" id="nav">
         <Navbar />
       </div>
-      <RefreshProvider>
+     
         {/* Scoped overflow hidden */}
         <div className="content-container">
           <div className="recents" id="Recents">
@@ -69,7 +68,7 @@ function Home() {
             <Generate />
           </div>
         </div>
-      </RefreshProvider>
+   
     </div>
   );
 }

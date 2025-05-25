@@ -70,8 +70,10 @@ axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
     axios
       .get(`http://127.0.0.1:5000/shorten/expand/${shortCode}`) // Replace with your API endpoint
       .then((response) => {
-        console.log("API Response:", response.data?window.open(`http://localhost:5000/analytics/${shortCode}`,"_blank", "noopener"):"No data found");
-        triggerRefresh(); 
+        console.log("API Response:", response.data?window.open(`http://localhost:5000/analytics/${response.data.shortCode}`,"_blank", "noopener"):"No data found");
+          setTimeout(() => {
+        triggerRefresh();
+      }, 1000); // 1 second delay
       })
       .catch((error) => {
         console.error("Error making API call:", error);

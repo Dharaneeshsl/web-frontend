@@ -78,7 +78,7 @@ export default function UrlHistory() {
               {Array.isArray(record.data) &&
                 record.data.map((item, idx) => (
                   <div className="items" key={idx}>
-                    <img src={model1} alt="" />
+                    <img src={`data:image/png;base64,${item.base64img}`} alt="" />
                     <div className="info">
                       <p>{item.longUrl}</p>
                       <p>short/{item.shortCode}</p>
