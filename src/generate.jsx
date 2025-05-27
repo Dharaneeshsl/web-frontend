@@ -155,6 +155,7 @@ toast.promise(
           loading: 'Generating QR code...',
       success: ((response) => {
         console.log("API Response:", response.data);
+        
         triggerRefresh(); // Notify Recents to refresh
         setLocalQrCode(response.data.base64img);
         setQrCode(response.data.base64img);

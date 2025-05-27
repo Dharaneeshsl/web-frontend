@@ -8,83 +8,94 @@ import { RefreshContext } from "./RefreshContext";
 import toast from "react-hot-toast";
 
 function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useState();
-const{userid,setUserid}= useAuth();
-const {triggerRefresh}=useContext(RefreshContext);
+  const { userid, setUserid } = useAuth();
+  const { triggerRefresh } = useContext(RefreshContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    toast.promise(
-  axios.post("http://127.0.0.1:5000/auth/register", {
-    email: email,
-    password: password,
-  }),
-  {
-    loading: "Creating user...",
-    success: "User Created",
-    error: "User already exists",
-  }
-)
-.then((response) => {
-  console.log(response.data);
-});
+    toast
+      .promise(
+        axios.post("http://127.0.0.1:5000/auth/register", {
+          email: email,
+          password: password,
+        }),
+        {
+          loading: "Creating user...",
+          success: "User Created",
+          error: "User already exists",
+        }
+      )
+      .then((response) => {
+        navigate("/activate")
+        console.log(response.data);
+      });
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    toast.promise(axios
-      .post("http://127.0.0.1:5000/auth/login", {
-        email: email,
-        password: password,
-      }),{
-        loading:"Signing in",
-        success:"Signed in"
-      }).then((response) => {
-        console.log(response.data.access_token);
-        setAccessToken(response.data.access_token)
-        localStorage.setItem("accessToken", response.data.access_token); 
-        handleuserid(response.data.access_token).then(() => {
-          navigate("/home")
+    toast
+      .promise(
+        axios.post("http://127.0.0.1:5000/auth/login", {
+          email: email,
+          password: password,
+        }),
+        {
+          loading: "Signing in",
+          success: "Signed in",
+         
         }
-        )
-       // Save token
+      )
+      .then((response) => {
+        
+          console.log(response.data.access_token);
+          setAccessToken(response.data.access_token);
+          localStorage.setItem("accessToken", response.data.access_token);
+          handleuserid(response.data.access_token).then(() => {
+            navigate("/home");
+          });
+        
        
+        // Save token
+      })
+      .catch((error) => {
+        console.log(error);
+         if (error.status===401){
+          toast.error("Invalid credentials")
+        }
+        if(error.status===403){
+          toast.error("Activation required")
+        }
+      });
+  };
+
+  function handleuserid(token) {
+    return toast
+      .promise(
+        axios.get("http://127.0.0.1:5000/auth/userid", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        {
+          loading: "Fetching user info...",
+          success: "User info loaded",
+          error: "Failed to fetch user info",
+        }
+      )
+      .then((response) => {
+        setUserid(response.data.user_id);
+        console.log(response.data.user_id);
+        localStorage.setItem("userid", response.data.user_id);
+
+        triggerRefresh();
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  function handleuserid(token){
-
-
-    return toast.promise(
-    axios.get("http://127.0.0.1:5000/auth/userid", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }),
-    {
-      loading: "Fetching user info...",
-      success: "User info loaded",
-      error: "Failed to fetch user info",
-    }
-  )
-        .then((response) => {
-          setUserid(response.data.user_id)
-          console.log(response.data.user_id);
-          localStorage.setItem("userid", response.data.user_id);
-          
-        triggerRefresh();
-          
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    
   }
 
   useEffect(() => {
@@ -99,7 +110,6 @@ const {triggerRefresh}=useContext(RefreshContext);
     loginBtn.addEventListener("click", () => {
       container.classList.remove("active");
     });
-   
   }, []);
 
   return (
@@ -116,6 +126,8 @@ const {triggerRefresh}=useContext(RefreshContext);
                   type="email"
                   onChange={(e) => {
                     setEmail(e.target.value);
+                    localStorage.setItem("email",e.target.value);
+                    console.log(localStorage.getItem("email"))
                   }}
                   placeholder="Email"
                 />
@@ -136,6 +148,7 @@ const {triggerRefresh}=useContext(RefreshContext);
                   type="email"
                   onChange={(e) => {
                     setEmail(e.target.value);
+                    localStorage.setItem("email",e.target.value)
                   }}
                   placeholder="Email"
                 />

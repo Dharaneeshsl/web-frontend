@@ -11,6 +11,7 @@ import { AuthProvider } from "./AuthContext.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import { RefreshProvider } from "./RefreshContext.jsx";
 import { Toaster } from "react-hot-toast";
+import Activate from "./activate.jsx";
 function App() {
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/contributors" element={<Contributors />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login /> } />
+          <Route path="/activate" element={<Activate></Activate>}></Route>
 
         </Routes>
      

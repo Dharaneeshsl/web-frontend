@@ -6,14 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { RefreshContext,RefreshProvider } from "./RefreshContext.jsx";
 import { useContext } from "react";
 import { useAuth } from "./AuthContext.jsx";
+import notfound from "./assets/not found.png"
 
 
 function Recents() {
   const { refreshKey,triggerRefresh ,setQrCode,qrCode,shortCode,setShortCode,setExpiryDate,expiryDate} = useContext(RefreshContext); // Access the refreshKey
   const navigate = useNavigate();
   const {userid}=useAuth();
-  const [clicks, setClicks] = useState(18);
+  const [clicks, setClicks] = useState(10);
   const [ctr,setCtr]= useState(0.69)
+  const [records,setRecords]=useState(false)
   
 
 
@@ -23,6 +25,7 @@ function Recents() {
         userid:userid
       })
       .then((response) => {
+        setRecords(true)
         setClicks(response.data.clicks);
         setExpiryDate(formatDate(response.data.expiryDate));
         setShortCode(response.data.shortCode);
@@ -31,6 +34,7 @@ function Recents() {
       })
       .catch((error) => {
         console.error("Error fetching recents:", error);
+
       });
      
     const dashboard = document.querySelector('.dashboard-container');
@@ -57,7 +61,7 @@ useEffect(()=>{
 axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
       .then((response) =>{
         console.log(response.data)
-        setCtr(response.data.ctr)
+        setCtr(response.data.ctr) 
       })
   
 
@@ -95,6 +99,8 @@ axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
   return (
     
     <div className="dashboard-container">
+   
+      {records?
       <div className="childelements">
         <div className="title">
           <h1>Recents</h1>
@@ -150,7 +156,10 @@ axios.get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
             <p className="card-value exp">{expiryDate}</p>
           </div>
         </div>
-      </div>
+      </div>  :   <><div className="title">
+          <h1>Recents</h1>
+        </div><div className="norecord"><div className="pic"><img src={notfound} alt="" className="src" /></div><div className="rec">No Records <br />Created</div></div></>
+        }
     </div>
   );
 }

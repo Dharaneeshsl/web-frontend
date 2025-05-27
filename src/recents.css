@@ -36,6 +36,35 @@
   transition: opacity 0.2s ease;
 }
 
+.norecord
+{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.rec{
+  position: absolute;
+  font-size: 100px;
+  bottom: 100px;
+  left: 20px;
+}
+.pic{
+  position: absolute;
+  left: 90px;
+  bottom: 300px;
+  height: 300px;
+  width: 400px;
+  object-fit: cover;
+}
+
+.pic img{
+    height: 100%;
+  width: 100%;
+   object-fit: cover;
+}
+
 .dashboard-container:hover::before {
   opacity: 1;
 }
