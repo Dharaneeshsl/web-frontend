@@ -25,7 +25,7 @@ function Login() {
         }),
         {
           loading: "Creating user...",
-          success: "User Created",
+          success: "Sent Activation Link",
           error: "User already exists",
         }
       )
