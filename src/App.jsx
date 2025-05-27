@@ -21,6 +21,7 @@ function App() {
     <Router>
        <AuthProvider>
         <RefreshProvider>
+          
           <Toaster position="bottom-center" />
       <div id="root">
         
@@ -28,9 +29,9 @@ function App() {
          
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path="/history" element={<History />} />
+          <Route path="/history" element={<PrivateRoute> <History /></PrivateRoute>} />
           <Route path="/contributors" element={<Contributors />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /> </PrivateRoute>} />
           <Route path="/login" element={<Login /> } />
           <Route path="/activate" element={<Activate></Activate>}></Route>
 

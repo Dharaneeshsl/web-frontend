@@ -11,12 +11,93 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [accessToken, setAccessToken] = useState();
   const { userid, setUserid } = useAuth();
+  const [showStrengthBar, setShowStrengthBar] = useState(false);
   const { triggerRefresh } = useContext(RefreshContext);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    message: "",
+  });
+
+  // Email validation
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address",
+      }));
+      return false;
+    } else {
+      setErrors((prev) => ({ ...prev, email: "" }));
+      return true;
+    }
+  };
+
+  // Password strength check
+  const checkPasswordStrength = (password) => {
+    let score = 0;
+
+    // Check length
+    if (password.length >= 8) score += 1;
+    // Check for numbers
+    if (/\d/.test(password)) score += 1;
+    // Check for special chars
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
+    // Check for uppercase
+    if (/[A-Z]/.test(password)) score += 1;
+
+    setPasswordStrength({ score });
+    return score >= 2; // At least moderate strength
+  };
+
+  // Confirm password validation
+  const validateConfirmPassword = (password, confirmPassword) => {
+    if (password !== confirmPassword) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
+      return false;
+    } else {
+      setErrors((prev) => ({ ...prev, confirmPassword: "" }));
+      return true;
+    }
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    // Validate all fields
+    const isEmailValid = validateEmail(email);
+    const isPasswordStrong = checkPasswordStrength(password);
+    const isPasswordMatch = validateConfirmPassword(password, confirmPassword);
+
+    if (!isEmailValid) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    if (!isPasswordStrong) {
+      toast.error("Enter a stronger password");
+      return;
+    }
+    if (!isPasswordMatch) {
+      toast.error("Passwords does not match");
+      return;
+    }
+
+    if (passwordStrength.score < 2) {
+      toast.error("Please choose a stronger password");
+      return;
+    }
+
     toast
       .promise(
         axios.post("http://127.0.0.1:5000/auth/register", {
@@ -26,17 +107,27 @@ function Login() {
         {
           loading: "Creating user...",
           success: "Sent Activation Link",
-          error: "User already exists",
+          error: (err) => {
+            if (err.response?.status === 409) {
+              return "User already exists";
+            }
+            return "Registration failed";
+          },
         }
       )
       .then((response) => {
-        navigate("/activate")
+        navigate("/activate");
         console.log(response.data);
       });
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email");
+      return;
+    }
+
     toast
       .promise(
         axios.post("http://127.0.0.1:5000/auth/login", {
@@ -46,29 +137,24 @@ function Login() {
         {
           loading: "Signing in",
           success: "Signed in",
-         
+          error: (error) => {
+            if (error.response?.status === 401) {
+              return "Invalid credentials";
+            }
+            if (error.response?.status === 403) {
+              return "Activation required";
+            }
+            return "Login failed";
+          },
         }
       )
       .then((response) => {
-        
-          console.log(response.data.access_token);
-          setAccessToken(response.data.access_token);
-          localStorage.setItem("accessToken", response.data.access_token);
-          handleuserid(response.data.access_token).then(() => {
-            navigate("/home");
-          });
-        
-       
-        // Save token
-      })
-      .catch((error) => {
-        console.log(error);
-         if (error.status===401){
-          toast.error("Invalid credentials")
-        }
-        if(error.status===403){
-          toast.error("Activation required")
-        }
+        console.log(response.data.access_token);
+        setAccessToken(response.data.access_token);
+        localStorage.setItem("accessToken", response.data.access_token);
+        handleuserid(response.data.access_token).then(() => {
+          navigate("/home");
+        });
       });
   };
 
@@ -90,7 +176,6 @@ function Login() {
         setUserid(response.data.user_id);
         console.log(response.data.user_id);
         localStorage.setItem("userid", response.data.user_id);
-
         triggerRefresh();
       })
       .catch((error) => {
@@ -110,6 +195,11 @@ function Login() {
     loginBtn.addEventListener("click", () => {
       container.classList.remove("active");
     });
+
+    return () => {
+      registerBtn.removeEventListener("click", () => {});
+      loginBtn.removeEventListener("click", () => {});
+    };
   }, []);
 
   return (
@@ -126,18 +216,62 @@ function Login() {
                   type="email"
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    localStorage.setItem("email",e.target.value);
-                    console.log(localStorage.getItem("email"))
+                    localStorage.setItem("email", e.target.value);
+                    validateEmail(e.target.value);
+                  }}
+                  onBlur={() => {
+                    if (!email) {
+                      setErrors((prev) => ({ ...prev, email: "" }));
+                    }
                   }}
                   placeholder="Email"
+                  className={errors.email ? "error-input" : ""}
                 />
+                {errors.email && (
+                  <span className="error-message">{errors.email}</span>
+                )}
+
                 <input
                   type="password"
                   onChange={(e) => {
                     setPassword(e.target.value);
+                    checkPasswordStrength(e.target.value);
+                    if (confirmPassword) {
+                      validateConfirmPassword(e.target.value, confirmPassword);
+                    }
                   }}
+                  onFocus={() => setShowStrengthBar(true)}
+                  onBlur={() => !password && setShowStrengthBar(false)}
                   placeholder="Password"
                 />
+
+                {/* Password Strength Bar - only shown when focused/has content */}
+                {(showStrengthBar || password) && (
+                  <div className="password-strength-container">
+                    <div
+                      className={`password-strength-bar strength-${passwordStrength.score}`}
+                      style={{
+                        width: `${(passwordStrength.score / 4) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                )}
+
+                <input
+                  type="password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    validateConfirmPassword(password, e.target.value);
+                  }}
+                  placeholder="Confirm Password"
+                  className={errors.confirmPassword ? "error-input" : ""}
+                />
+                {errors.confirmPassword && (
+                  <span className="error-message">
+                    {errors.confirmPassword}
+                  </span>
+                )}
+
                 <button type="submit">Sign Up</button>
               </form>
             </div>
@@ -148,10 +282,21 @@ function Login() {
                   type="email"
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    localStorage.setItem("email",e.target.value)
+                    localStorage.setItem("email", e.target.value);
+                    validateEmail(e.target.value);
+                  }}
+                  onBlur={() => {
+                    if (!email) {
+                      setErrors((prev) => ({ ...prev, email: "" }));
+                    }
                   }}
                   placeholder="Email"
+                  className={errors.email ? "error-input" : ""}
                 />
+                {errors.email && (
+                  <span className="error-message">{errors.email}</span>
+                )}
+
                 <input
                   type="password"
                   onChange={(e) => {
@@ -166,13 +311,12 @@ function Login() {
               <div className="toggle">
                 <div className="toggle-panel toggle-left">
                   <h1>Welcome Back!</h1>
-
                   <button className="hidden" id="loginbtn">
                     Sign In
                   </button>
                 </div>
                 <div className="toggle-panel toggle-right">
-                  <h1> Hello! </h1>
+                  <h1>Hello!</h1>
                   <p>Register with your email</p>
                   <button className="hidden" id="register">
                     Sign Up

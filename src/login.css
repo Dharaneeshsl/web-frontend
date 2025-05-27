@@ -207,3 +207,102 @@ b{
 .loginheading{
     color: #080809;
 }
+/* Add these to your existing login.css */
+
+.error-input {
+  border-color: #ff4444 !important;
+}
+
+.error-message {
+  color: #000000;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.password-strength {
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.password-strength.strength-0,
+.password-strength.strength-1 {
+  color: #ff4444;
+}
+
+.password-strength.strength-2 {
+  color: #ffbb33;
+}
+
+.password-strength.strength-3,
+.password-strength.strength-4 {
+  color: #00C851;
+}
+
+/* Password Strength Bar Styles */
+.password-strength-container {
+  width: 100%;
+  height: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-0 {
+  background-color: #ff4444;
+  width: 5% !important;
+}
+
+.strength-1 {
+  background-color: #ff4444;
+  width: 25% !important;
+}
+
+.strength-2 {
+  background-color: #ffbb33;
+  width: 50% !important;
+}
+
+.strength-3 {
+  background-color: #00C851;
+  width: 100% !important;
+}
+
+.strength-4 {
+  background-color: #00C851;
+  width: 100% !important;
+}
+.password-strength-container {
+  width: 100%;
+  height: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.password-strength-container.hidden {
+  height: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.password-strength-bar {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Keep your existing strength color classes */
