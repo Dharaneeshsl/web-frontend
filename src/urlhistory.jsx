@@ -15,7 +15,7 @@ export default function UrlHistory() {
   const handleDelete = (shortCode) => {
     toast
       .promise(
-        axios.delete("http://localhost:5000/admin/delete", {
+        axios.delete("https://web-backend-sdfc.onrender.com/admin/delete", {
           data: { shortCode: shortCode },
         }),
         {
@@ -31,7 +31,9 @@ export default function UrlHistory() {
   useEffect(() => {
     console.log(localStorage.getItem("userid"));
     axios
-      .post("http://127.0.0.1:5000/admin/all", { userid: userid })
+      .post("https://web-backend-sdfc.onrender.com/admin/all", {
+        userid: userid,
+      })
       .then((response) => {
         setRecord(response);
         console.log(response.data);

@@ -20,6 +20,7 @@ export default function LandingPage() {
     },2000);
     };
   useEffect(() => {
+    document.body.style.overflow='hidden';
     
     const chars =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -139,6 +140,9 @@ export default function LandingPage() {
         },
       });
     }
+    return(()=>{
+      document.body.style.overflow='auto';
+    })
   }, []);
   return (
     <>

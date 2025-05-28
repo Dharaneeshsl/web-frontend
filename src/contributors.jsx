@@ -73,7 +73,9 @@ export default function Contributors() {
   const headref = useRef(null);
   const effectRan = useRef(false);
 
+
   useEffect(() => {
+     
     if (effectRan.current) return;
     effectRan.current = true;
     gsap.registerPlugin(SplitText);
@@ -97,7 +99,7 @@ export default function Contributors() {
     const heading = document.querySelector(".heading h1");
 
     const split = new SplitText(heading, { type: "chars" });
-
+    
     console.log(split);
     gsap.fromTo(
       split.chars,
@@ -202,6 +204,7 @@ export default function Contributors() {
     }
 
     function updatePosition() {
+    
       const scrollAmount = window.scrollY * 0.001;
       document.querySelectorAll(".item").forEach((item, index) => {
         const angle = index * angleIncrement + scrollAmount;
@@ -219,6 +222,7 @@ export default function Contributors() {
     }
 
     updatePosition();
+    
     document.addEventListener("scroll", updatePosition);
     document.addEventListener("mousemove", function (e) {
       gsap.to(follow, {
@@ -228,6 +232,7 @@ export default function Contributors() {
         ease: "power3.Out",
       });
     });
+    
   }, []);
   return (
     <>
