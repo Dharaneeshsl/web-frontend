@@ -15,82 +15,16 @@ function Generate() {
   const [isValidUrl, setIsValidUrl] = useState(true);
   const [qrCodeBase64, setQrCodeBase64] = useState(null);
   const [localQrCode, setLocalQrCode] = useState(null); // State to store the Base64 string
-  const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =
-    useContext(RefreshContext); // Access the context
+  const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =useContext(RefreshContext); // Access the context
+  const [urlInput, setUrlInput] = useState('');
+    const [urlList, setUrlList] = useState([]);
+    const [qrRenders,setqrRenders]=useState([])
+    const [shorturl,setshorturl]=useState([])
 
   console.log(userid);
 
-  const handleModelClick = (model) => {
-    setSelectedModel((prev) => (prev === model ? null : model));
-  };
-
-  const handleUrlChange = (e) => {
-    const inputUrl = e.target.value;
-    console.log(inputUrl);
-    setUrl(inputUrl);
-
-    try {
-      new URL(inputUrl);
-      setIsValidUrl(true);
-    } catch (error) {
-      setIsValidUrl(false);
-    }
-  };
-
-  const handleDownload = async () => {
-    try {
-      if (!localQrCode) {
-        alert("QR code not available for download. Please generate one first.");
-        return;
-      }
-
-      const link = document.createElement("a");
-      link.href = `data:image/png;base64,${localQrCode}`;
-      link.download = "qrcode.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the file:", error);
-    }
-  };
-
-  const handleGenerate = async () => {
-    console.log(userid);
-    if (!url || !isValidUrl) {
-      toast.error("Enter a valid URL", {
-        style: {
-          padding: "16px",
-          color: "black",
-        },
-        iconTheme: {
-          primary: "black",
-          secondary: "white",
-        },
-      });
-
-      return;
-    }
-    if (!selectedModel) {
-      toast.error("Select a QR Model", {
-        style: {
-          padding: "16px",
-          color: "black",
-        },
-        iconTheme: {
-          primary: "black",
-          secondary: "white",
-        },
-      });
-      return;
-    }
-
-    toast.promise(
-      axios.post("http://127.0.0.1:5000/shorten/shorten", {
-        userid: userid,
-        longUrl: url,
-        qrRender:
-          selectedModel === 1
+   const getPayload =(selectedModel)=>{
+    return (selectedModel === 1
             ? {
                 data: url,
                 config: {
@@ -148,8 +82,133 @@ function Generate() {
                 size: 1000,
                 download: "imageUrl",
                 file: "png",
-              },
-      }),
+              })
+
+   }
+     
+
+   
+   const handleAddUrl = () => {
+    const trimmedUrl = urlInput.trim();
+    if (trimmedUrl && !urlList.includes(trimmedUrl)) {
+      setUrlList([...urlList, trimmedUrl]);
+      setUrlInput('');
+    }
+   
+  };
+
+  const handleDeleteUrl = (urlToDelete) => {
+    setUrlList(urlList.filter(url => url !== urlToDelete));
+  };
+
+  const handleModelClick = (model) => {
+    setSelectedModel((prev) => (prev === model ? null : model));
+  };
+
+  const handleUrlChange = (e) => {
+    const inputUrl = e.target.value;
+    console.log(inputUrl);
+    setUrlInput(e.target.value)
+    setUrl(inputUrl);
+
+    try {
+      new URL(inputUrl);
+      setIsValidUrl(true);
+    } catch (error) {
+      setIsValidUrl(false);
+    }
+  };
+
+  const handleDownload = async () => {
+    try {
+      if (!localQrCode) {
+        alert("QR code not available for download. Please generate one first.");
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.href = `data:image/png;base64,${localQrCode}`;
+      link.download = "qrcode.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
+  };
+   const bulkpayload =(urlList)=>{
+      const qrPayloads = urlList.map((url,idx)=>{
+        const urlPayload=getPayload(selectedModel)
+        urlPayload.data=url
+        console.log(urlPayload)
+      return urlPayload}
+      
+     )
+    
+     return qrPayloads
+
+    
+
+    }
+
+   const bulkRequest = () => {
+    const qrPayloads=bulkpayload(urlList)
+    console.log(qrPayloads)
+    axios.post("http://127.0.0.1:5000/bs/bulk-shorten",{
+      urls: urlList,
+      payloads: qrPayloads,
+      userid : userid
+    })
+    .then((response)=>{
+      console.log(response)
+      setqrRenders(response.data.qrRenders)
+      setshorturl(response.data.shortUrls)
+     setTimeout(()=>triggerRefresh(),1000)
+     console.log(qrRenders)
+     console.log(shorturl)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+
+    
+  }
+   
+  const handleGenerate = async () => {
+    console.log(userid);
+    if (!url || !isValidUrl) {
+      toast.error("Enter a valid URL", {
+        style: {
+          padding: "16px",
+          color: "black",
+        },
+        iconTheme: {
+          primary: "black",
+          secondary: "white",
+        },
+      });
+
+      return;
+    }
+    if (!selectedModel) {
+      toast.error("Select a QR Model", {
+        style: {
+          padding: "16px",
+          color: "black",
+        },
+        iconTheme: {
+          primary: "black",
+          secondary: "white",
+        },
+      });
+      return;
+    }
+
+    toast.promise(
+      axios.post("http://127.0.0.1:5000/shorten/shorten", {
+        userid: userid,
+        longUrl: url,
+        qrRender: getPayload(selectedModel)}),
       {
         loading: "Generating QR code...",
         success: (response) => {
@@ -256,7 +315,7 @@ function Generate() {
               value={url}
               onChange={handleUrlChange}
               required
-            />
+            /> <button className="add" onClick={handleAddUrl} >+</button>
             {!isValidUrl && (
               <p
                 style={{
@@ -271,11 +330,40 @@ function Generate() {
               </p>
             )}
             <div className="genbtn">
-              <button className="generate-btn" onClick={handleGenerate}>
+              
+              <button className="generate-btn" onClick={Array.isArray(urlList) && urlList.length?bulkRequest:handleGenerate}>
                 Generate
               </button>
             </div>
           </div>
+            <div className="bulk" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+        {urlList.map((url, index) => (
+          <div
+            key={index}
+            style={{
+              padding: '8px 12px',
+              backgroundColor: '#000000',
+              borderRadius: '16px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span>{url}</span>
+            <button
+              onClick={() => handleDeleteUrl(url)}
+              style={{
+                marginLeft: '8px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+              }}
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
           <div className="qrmodels">
             <div
               className={`model ${selectedModel === 1 ? "modactive" : ""}`}
