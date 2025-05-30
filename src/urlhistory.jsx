@@ -120,12 +120,12 @@ export default function UrlHistory() {
                       <div className="info">
                         <p>Created at :{formatDate(item.createdAt)}</p>
                         <p>
-                          short url{" "}
+                          shorturl:{" "}
                           <a href="" onClick={()=>{redirect(item.shortCode)}}>
                             short/{item.shortCode}
                           </a>
                         </p>
-                        <p className="anbtn" onClick={()=>navigate("/dashboard") }>View Analytics</p>
+                        <p className="anbtn" onClick={()=>navigate(`/dashboard/${item.shortCode}`) }>View Analytics</p>
                       </div>
                       <div className="actionbtn">
                         <button

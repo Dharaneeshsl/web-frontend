@@ -32,7 +32,7 @@ function App() {
           <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/history" element={<PrivateRoute> <History /></PrivateRoute>} />
           <Route path="/contributors" element={<Contributors />} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /> </PrivateRoute>} />
+          <Route path="/dashboard/:id" element={<PrivateRoute><Dashboard /> </PrivateRoute>} />
           <Route path="/login" element={<Login /> } />
           <Route path="/bulk" element={<BulkURLShortener /> } />
           <Route path="/activate" element={<Activate></Activate>}></Route>
