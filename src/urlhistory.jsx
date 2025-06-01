@@ -24,7 +24,7 @@ export default function UrlHistory() {
 
   const redirect = (shortCode) => {
     window.open(
-      `https://web-backend-sdfc.onrender.com /analytics/${shortCode}`,
+      `https://web-backend-sdfc.onrender.com/analytics/${shortCode}`,
       "_blank",
       "noopener"
     );
@@ -32,7 +32,7 @@ export default function UrlHistory() {
   const handleDelete = (shortCode) => {
     toast
       .promise(
-        axios.delete("https://web-backend-sdfc.onrender.com /admin/delete", {
+        axios.delete("https://web-backend-sdfc.onrender.com/admin/delete", {
           data: { shortCode: shortCode },
         }),
         {
@@ -48,7 +48,7 @@ export default function UrlHistory() {
   useEffect(() => {
     console.log(localStorage.getItem("userid"));
     axios
-      .post("https://web-backend-sdfc.onrender.com /admin/all", {
+      .post("https://web-backend-sdfc.onrender.com/admin/all", {
         userid: userid,
       })
       .then((response) => {

@@ -73,7 +73,7 @@ function Analytics({ id }) {
   const [record, setRecord] = useState();
   useEffect(() => {
     axios
-      .get(`https://web-backend-sdfc.onrender.com /analytics/analytics/${id}`)
+      .get(`https://web-backend-sdfc.onrender.com/analytics/analytics/${id}`)
       .then((response) => {
         setAnalyticsQR(response.data.base64img);
         setRecord(response.data);

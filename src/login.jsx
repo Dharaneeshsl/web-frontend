@@ -100,7 +100,7 @@ function Login() {
 
     toast
       .promise(
-        axios.post("https://web-backend-sdfc.onrender.com /auth/register", {
+        axios.post("https://web-backend-sdfc.onrender.com/auth/register", {
           email: email,
           password: password,
         }),
@@ -130,7 +130,7 @@ function Login() {
 
     toast
       .promise(
-        axios.post("https://web-backend-sdfc.onrender.com /auth/login", {
+        axios.post("https://web-backend-sdfc.onrender.com/auth/login", {
           email: email,
           password: password,
         }),
@@ -161,7 +161,7 @@ function Login() {
   function handleuserid(token) {
     return toast
       .promise(
-        axios.get("https://web-backend-sdfc.onrender.com /auth/userid", {
+        axios.get("https://web-backend-sdfc.onrender.com/auth/userid", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -20,7 +20,7 @@ export default function Activate() {
             if (localStorage.getItem("email")) {
               toast.promise(
                 axios.get(
-                  `https://web-backend-sdfc.onrender.com /auth/resend/${localStorage.getItem(
+                  `https://web-backend-sdfc.onrender.com/auth/resend/${localStorage.getItem(
                     "email"
                   )}`
                 ),

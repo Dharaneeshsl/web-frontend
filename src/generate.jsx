@@ -148,7 +148,7 @@ function Generate() {
     const qrPayloads = bulkpayload(urlList);
     console.log(qrPayloads);
     axios
-      .post("https://web-backend-sdfc.onrender.com /bs/bulk-shorten", {
+      .post("https://web-backend-sdfc.onrender.com/bs/bulk-shorten", {
         urls: urlList,
         payloads: qrPayloads,
         userid: userid,
@@ -197,7 +197,7 @@ function Generate() {
     }
 
     toast.promise(
-      axios.post("https://web-backend-sdfc.onrender.com /shorten/shorten", {
+      axios.post("https://web-backend-sdfc.onrender.com/shorten/shorten", {
         userid: userid,
         longUrl: url,
         qrRender: getPayload(selectedModel),
