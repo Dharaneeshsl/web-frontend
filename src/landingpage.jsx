@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function LandingPage() {
     const navigate = useNavigate();
   const [disp, setDisp] = useState(false);
+  const [loaded,setloaded]=useState(false)
   function splineEvents(e) { setTimeout(() => {
         console.log(e)
         if (e.target.name === "Login"){
@@ -21,6 +22,8 @@ export default function LandingPage() {
     };
   useEffect(() => {
     document.body.style.overflow='hidden';
+    
+    
     
     const chars =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -58,6 +61,7 @@ export default function LandingPage() {
     }
 
     function animateCounter() {
+     
       const counter = document.querySelector(".counter p");
       let curr = 0;
       const updateInterval = 300;
@@ -110,20 +114,23 @@ export default function LandingPage() {
             ease: "power3.inOut",
             delay: 0.25,
           });
+
           gsap.to(".overlay", {
             clipPath: "polygon(0 0%, 100% 0%, 100% 0%, 0 0%)",
             duration: 2,
             delay: 0.5,
             ease: "hop",
+              onStart: () => {
+              setDisp(true);
+            },
+            
           });
           gsap.to(".hero-gradient img", {
             scale: 1,
             duration: 2.25,
             delay: 0.25,
             ease: "power3.inOut",
-            onStart: () => {
-              setDisp(true);
-            },
+    
           });
 
           gsap.fromTo(
@@ -192,7 +199,7 @@ export default function LandingPage() {
             {disp ? (
               <Spline
                 scene="https://prod.spline.design/L5jSVUgZLc-SRGoZ/scene.splinecode"
-                onSplineMouseDown={splineEvents}
+                onSplineMouseDown={splineEvents} onLoad={()=>setloaded(true)}
               />
             ) : null}
           </div>

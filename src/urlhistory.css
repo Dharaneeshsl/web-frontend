@@ -36,8 +36,14 @@
  width: 600px;
     height: 200px;
 }
+.anbtn{
 
+  cursor: pointer;
+}
 .items{
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
     background-color: black;
     border-radius: 20px;
     width: 400px;
