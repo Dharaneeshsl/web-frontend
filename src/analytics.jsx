@@ -78,7 +78,6 @@ function Analytics({ id }) {
       .then((response) => {
         setAnalyticsQR(response.data.base64img);
         setRecord(response.data);
-        setShowContent(true);
         console.log(response.data);
         const clicks = response.data.click_data;
 
@@ -110,10 +109,12 @@ function Analytics({ id }) {
           clicks: count,
         }));
         setChartData(formatted);
+       
 
         console.log(record);
       })
       .catch((error) => console.log(error));
+       setShowContent(true);
   }, [id]);
 
   const highlightedPoint = mainChartData.find((p) => p.uv === 870);
