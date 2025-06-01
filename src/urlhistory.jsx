@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function UrlHistory() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const { userid } = useAuth();
   const scrollRef = useRef(null);
   const outRef = useRef(null);
@@ -24,7 +24,7 @@ export default function UrlHistory() {
 
   const redirect = (shortCode) => {
     window.open(
-      `http://127.0.0.1:5000/analytics/${shortCode}`,
+      `https://web-backend-sdfc.onrender.com /analytics/${shortCode}`,
       "_blank",
       "noopener"
     );
@@ -32,7 +32,7 @@ export default function UrlHistory() {
   const handleDelete = (shortCode) => {
     toast
       .promise(
-        axios.delete("http://127.0.0.1:5000/admin/delete", {
+        axios.delete("https://web-backend-sdfc.onrender.com /admin/delete", {
           data: { shortCode: shortCode },
         }),
         {
@@ -48,7 +48,7 @@ export default function UrlHistory() {
   useEffect(() => {
     console.log(localStorage.getItem("userid"));
     axios
-      .post("http://127.0.0.1:5000/admin/all", {
+      .post("https://web-backend-sdfc.onrender.com /admin/all", {
         userid: userid,
       })
       .then((response) => {
@@ -121,11 +121,23 @@ export default function UrlHistory() {
                         <p>Created at :{formatDate(item.createdAt)}</p>
                         <p>
                           shorturl:{" "}
-                          <a href="" onClick={()=>{redirect(item.shortCode)}}>
+                          <a
+                            href=""
+                            onClick={() => {
+                              redirect(item.shortCode);
+                            }}
+                          >
                             short/{item.shortCode}
                           </a>
                         </p>
-                        <p className="anbtn" onClick={()=>navigate(`/dashboard/${item.shortCode}`) }>View Analytics</p>
+                        <p
+                          className="anbtn"
+                          onClick={() =>
+                            navigate(`/dashboard/${item.shortCode}`)
+                          }
+                        >
+                          View Analytics
+                        </p>
                       </div>
                       <div className="actionbtn">
                         <button

@@ -69,14 +69,14 @@ function Analytics({ id }) {
   const longUrl = "https://helloworld.com";
   const shortUrl = "https://sh.rt/xyz";
   const [chartData, setChartData] = useState();
-  const [analyticsQR,setAnalyticsQR]=useState()
-  const [record,setRecord]=useState()
+  const [analyticsQR, setAnalyticsQR] = useState();
+  const [record, setRecord] = useState();
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/analytics/analytics/${id}`)
+      .get(`https://web-backend-sdfc.onrender.com /analytics/analytics/${id}`)
       .then((response) => {
-        setAnalyticsQR(response.data.base64img)
-        setRecord(response.data)
+        setAnalyticsQR(response.data.base64img);
+        setRecord(response.data);
         const clicks = response.data.click_data;
 
         // Step 1: Count clicks per day
@@ -108,7 +108,7 @@ function Analytics({ id }) {
         }));
         setChartData(formatted);
 
-        console.log(record) 
+        console.log(record);
       })
       .catch((error) => console.log(error));
   }, [id]);
@@ -154,10 +154,7 @@ function Analytics({ id }) {
                     tickCount={12}
                     stroke="#888"
                   />
-                  <YAxis
-                    hide={true}
-                    domain={["dataMin-3", "dataMax+5"]}
-                  />
+                  <YAxis hide={true} domain={["dataMin-3", "dataMax+5"]} />
                   <Tooltip
                     content={<CustomTooltip />}
                     cursor={{ stroke: "#555", strokeDasharray: "3 3" }}

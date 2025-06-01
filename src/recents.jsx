@@ -27,7 +27,7 @@ function Recents() {
 
   useEffect(() => {
     axios
-      .post("http://127.0.0.1:5000/admin/recent", {
+      .post("https://web-backend-sdfc.onrender.com /admin/recent", {
         userid: userid,
       })
       .then((response) => {
@@ -64,7 +64,7 @@ function Recents() {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/analytics/ctr/${shortCode}`)
+      .get(`https://web-backend-sdfc.onrender.com /analytics/ctr/${shortCode}`)
       .then((response) => {
         console.log(response.data);
         setCtr(response.data.ctr);
@@ -75,13 +75,13 @@ function Recents() {
 
     // Make an API call
     axios
-      .get(`http://127.0.0.1:5000/shorten/expand/${shortCode}`) // Replace with your API endpoint
+      .get(`https://web-backend-sdfc.onrender.com /shorten/expand/${shortCode}`) // Replace with your API endpoint
       .then((response) => {
         console.log(
           "API Response:",
           response.data
             ? window.open(
-                `http://127.0.0.1:5000/analytics/${response.data.shortCode}`,
+                `https://web-backend-sdfc.onrender.com /analytics/${response.data.shortCode}`,
                 "_blank",
                 "noopener"
               )

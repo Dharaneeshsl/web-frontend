@@ -15,90 +15,87 @@ function Generate() {
   const [isValidUrl, setIsValidUrl] = useState(true);
   const [qrCodeBase64, setQrCodeBase64] = useState(null);
   const [localQrCode, setLocalQrCode] = useState(null); // State to store the Base64 string
-  const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =useContext(RefreshContext); // Access the context
-  const [urlInput, setUrlInput] = useState('');
-    const [urlList, setUrlList] = useState([]);
-    const [qrRenders,setqrRenders]=useState([])
-    const [shorturl,setshorturl]=useState([])
+  const { triggerRefresh, setQrCode, qrCode, shortCode, expiryDate } =
+    useContext(RefreshContext); // Access the context
+  const [urlInput, setUrlInput] = useState("");
+  const [urlList, setUrlList] = useState([]);
+  const [qrRenders, setqrRenders] = useState([]);
+  const [shorturl, setshorturl] = useState([]);
 
   console.log(userid);
 
-   const getPayload =(selectedModel)=>{
-    return (selectedModel === 1
-            ? {
-                data: url,
-                config: {
-                  body: "circle",
-                  eye: "frame0",
-                  eyeBall: "ball0",
-                  bodyColor: "#FFFFFF",
-                  bgColor: "#00000000",
-                  eye1Color: "#FFFFFF",
-                  eye2Color: "#FFFFFF",
-                  eye3Color: "#FFFFFF",
-                  eyeBall1Color: "#FFFFFF",
-                  eyeBall2Color: "#FFFFFF",
-                  eyeBall3Color: "#FFFFFF",
-                },
-                size: 1000,
-                download: "imageUrl",
-                file: "png",
-              }
-            : selectedModel === 2
-            ? {
-                data: url,
-                config: {
-                  body: "square",
-                  eye: "frame0",
-                  eyeBall: "ball0",
-                  bodyColor: "#FFFFFF",
-                  bgColor: "#00000000",
-                  eye1Color: "#FFFFFF",
-                  eye2Color: "#FFFFFF",
-                  eye3Color: "#FFFFFF",
-                  eyeBall1Color: "#FFFFFF",
-                  eyeBall2Color: "#FFFFFF",
-                  eyeBall3Color: "#FFFFFF",
-                },
-                size: 1000,
-                download: "imageUrl",
-                file: "png",
-              }
-            : {
-                data: url,
-                config: {
-                  body: "circle-zebra-vertical",
-                  eye: "frame0",
-                  eyeBall: "ball0",
-                  bodyColor: "#FFFFFF",
-                  bgColor: "#00000000",
-                  eye1Color: "#FFFFFF",
-                  eye2Color: "#FFFFFF",
-                  eye3Color: "#FFFFFF",
-                  eyeBall1Color: "#FFFFFF",
-                  eyeBall2Color: "#FFFFFF",
-                  eyeBall3Color: "#FFFFFF",
-                },
-                size: 1000,
-                download: "imageUrl",
-                file: "png",
-              })
+  const getPayload = (selectedModel) => {
+    return selectedModel === 1
+      ? {
+          data: url,
+          config: {
+            body: "circle",
+            eye: "frame0",
+            eyeBall: "ball0",
+            bodyColor: "#FFFFFF",
+            bgColor: "#00000000",
+            eye1Color: "#FFFFFF",
+            eye2Color: "#FFFFFF",
+            eye3Color: "#FFFFFF",
+            eyeBall1Color: "#FFFFFF",
+            eyeBall2Color: "#FFFFFF",
+            eyeBall3Color: "#FFFFFF",
+          },
+          size: 1000,
+          download: "imageUrl",
+          file: "png",
+        }
+      : selectedModel === 2
+      ? {
+          data: url,
+          config: {
+            body: "square",
+            eye: "frame0",
+            eyeBall: "ball0",
+            bodyColor: "#FFFFFF",
+            bgColor: "#00000000",
+            eye1Color: "#FFFFFF",
+            eye2Color: "#FFFFFF",
+            eye3Color: "#FFFFFF",
+            eyeBall1Color: "#FFFFFF",
+            eyeBall2Color: "#FFFFFF",
+            eyeBall3Color: "#FFFFFF",
+          },
+          size: 1000,
+          download: "imageUrl",
+          file: "png",
+        }
+      : {
+          data: url,
+          config: {
+            body: "circle-zebra-vertical",
+            eye: "frame0",
+            eyeBall: "ball0",
+            bodyColor: "#FFFFFF",
+            bgColor: "#00000000",
+            eye1Color: "#FFFFFF",
+            eye2Color: "#FFFFFF",
+            eye3Color: "#FFFFFF",
+            eyeBall1Color: "#FFFFFF",
+            eyeBall2Color: "#FFFFFF",
+            eyeBall3Color: "#FFFFFF",
+          },
+          size: 1000,
+          download: "imageUrl",
+          file: "png",
+        };
+  };
 
-   }
-     
-
-   
-   const handleAddUrl = () => {
+  const handleAddUrl = () => {
     const trimmedUrl = urlInput.trim();
     if (trimmedUrl && !urlList.includes(trimmedUrl)) {
       setUrlList([...urlList, trimmedUrl]);
-      setUrlInput('');
+      setUrlInput("");
     }
-   
   };
 
   const handleDeleteUrl = (urlToDelete) => {
-    setUrlList(urlList.filter(url => url !== urlToDelete));
+    setUrlList(urlList.filter((url) => url !== urlToDelete));
   };
 
   const handleModelClick = (model) => {
@@ -108,7 +105,7 @@ function Generate() {
   const handleUrlChange = (e) => {
     const inputUrl = e.target.value;
     console.log(inputUrl);
-    setUrlInput(e.target.value)
+    setUrlInput(e.target.value);
     setUrl(inputUrl);
 
     try {
@@ -136,44 +133,39 @@ function Generate() {
       console.error("Error downloading the file:", error);
     }
   };
-   const bulkpayload =(urlList)=>{
-      const qrPayloads = urlList.map((url,idx)=>{
-        const urlPayload=getPayload(selectedModel)
-        urlPayload.data=url
-        console.log(urlPayload)
-      return urlPayload}
-      
-     )
-    
-     return qrPayloads
+  const bulkpayload = (urlList) => {
+    const qrPayloads = urlList.map((url, idx) => {
+      const urlPayload = getPayload(selectedModel);
+      urlPayload.data = url;
+      console.log(urlPayload);
+      return urlPayload;
+    });
 
-    
+    return qrPayloads;
+  };
 
-    }
+  const bulkRequest = () => {
+    const qrPayloads = bulkpayload(urlList);
+    console.log(qrPayloads);
+    axios
+      .post("https://web-backend-sdfc.onrender.com /bs/bulk-shorten", {
+        urls: urlList,
+        payloads: qrPayloads,
+        userid: userid,
+      })
+      .then((response) => {
+        console.log(response);
+        setqrRenders(response.data.qrRenders);
+        setshorturl(response.data.shortUrls);
+        setTimeout(() => triggerRefresh(), 1000);
+        console.log(qrRenders);
+        console.log(shorturl);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-   const bulkRequest = () => {
-    const qrPayloads=bulkpayload(urlList)
-    console.log(qrPayloads)
-    axios.post("http://127.0.0.1:5000/bs/bulk-shorten",{
-      urls: urlList,
-      payloads: qrPayloads,
-      userid : userid
-    })
-    .then((response)=>{
-      console.log(response)
-      setqrRenders(response.data.qrRenders)
-      setshorturl(response.data.shortUrls)
-     setTimeout(()=>triggerRefresh(),1000)
-     console.log(qrRenders)
-     console.log(shorturl)
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-
-    
-  }
-   
   const handleGenerate = async () => {
     console.log(userid);
     if (!url || !isValidUrl) {
@@ -205,10 +197,11 @@ function Generate() {
     }
 
     toast.promise(
-      axios.post("http://127.0.0.1:5000/shorten/shorten", {
+      axios.post("https://web-backend-sdfc.onrender.com /shorten/shorten", {
         userid: userid,
         longUrl: url,
-        qrRender: getPayload(selectedModel)}),
+        qrRender: getPayload(selectedModel),
+      }),
       {
         loading: "Generating QR code...",
         success: (response) => {
@@ -315,7 +308,10 @@ function Generate() {
               value={url}
               onChange={handleUrlChange}
               required
-            /> <button className="add" onClick={handleAddUrl} >+</button>
+            />{" "}
+            <button className="add" onClick={handleAddUrl}>
+              +
+            </button>
             {!isValidUrl && (
               <p
                 style={{
@@ -330,40 +326,49 @@ function Generate() {
               </p>
             )}
             <div className="genbtn">
-              
-              <button className="generate-btn" onClick={Array.isArray(urlList) && urlList.length?bulkRequest:handleGenerate}>
+              <button
+                className="generate-btn"
+                onClick={
+                  Array.isArray(urlList) && urlList.length
+                    ? bulkRequest
+                    : handleGenerate
+                }
+              >
                 Generate
               </button>
             </div>
           </div>
-            <div className="bulk" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-        {urlList.map((url, index) => (
           <div
-            key={index}
-            style={{
-              padding: '8px 12px',
-              backgroundColor: '#000000',
-              borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-            }}
+            className="bulk"
+            style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}
           >
-            <span>{url}</span>
-            <button
-              onClick={() => handleDeleteUrl(url)}
-              style={{
-                marginLeft: '8px',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-              }}
-            >
-              ×
-            </button>
+            {urlList.map((url, index) => (
+              <div
+                key={index}
+                style={{
+                  padding: "8px 12px",
+                  backgroundColor: "#000000",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <span>{url}</span>
+                <button
+                  onClick={() => handleDeleteUrl(url)}
+                  style={{
+                    marginLeft: "8px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
           <div className="qrmodels">
             <div
               className={`model ${selectedModel === 1 ? "modactive" : ""}`}
