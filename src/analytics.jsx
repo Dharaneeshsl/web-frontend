@@ -109,12 +109,11 @@ function Analytics({ id }) {
           clicks: count,
         }));
         setChartData(formatted);
-       
+        setShowContent(true);
 
         console.log(record);
       })
       .catch((error) => console.log(error));
-       setShowContent(true);
   }, [id]);
 
   const highlightedPoint = mainChartData.find((p) => p.uv === 870);
